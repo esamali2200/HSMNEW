@@ -21,6 +21,20 @@
     <link href="../css/bootstrap.min.css" rel="stylesheet" />
 
     <style>
+
+   
+     
+     body {
+    background-image: url('/img/Zlhospital-removebg-preview_processed.png'); /* مسار الصورة الخلفية */
+    background-size: contain; /* لتصغير الصورة بحيث تبين كاملة داخل الخلفية */
+    background-position: center; /* محاذاة الصورة في المنتصف */
+    background-repeat: no-repeat; /* عدم تكرار الصورة */
+    background-attachment: fixed; /* لتثبيت الخلفية أثناء التمرير */
+    margin: 10;
+    font-family: Arial, sans-serif; /* تحديد نوع الخط */
+    color: white; /* تحديد لون النص */
+}
+
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -245,7 +259,7 @@
             <svg class="bi pe-none me-2" width="16" height="16">
               <use xlink:href="#people-circle" />
             </svg>
-            <span class="sidebar-text"> Add customers </span>
+            <span class="sidebar-text"> Add patients </span>
           </a>
         </li>
       </ul>
@@ -283,21 +297,16 @@
           <div
             class="container-fluid justify-content-center justify-content-md-between"
           >
+          <img src="/img/Zlhospital-removebg-preview_processed.png" alt="Example Image" width="90" height="90" />
+
             <a class="navbar-brand fw-medium fs-3 mb-1 mb-md-0"
               >Zliten Medical Center</a
             >
+
+            <img src="/img/Zlhospital-removebg-preview_processed.png" alt="Example Image" width="90" height="90" />
+
           
-            <form class="d-flex" role="search">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form>
+            
           </div>
         </nav>
 
@@ -338,16 +347,8 @@
             />
           </div>
 
-          <div class="col-md-6">
-            <label for="inputemail4" class="form-label">Email:</label>
-            <input
-            name="email"
-            value="<%= obj.email %>"
-              type="email"
-              class="form-control"
-              id="inputemail4"
-            />
-          </div>
+          
+
           <div class="col-md-6">
             <label for="inputtele4" class="form-label">Telephone:</label>
             <input
@@ -356,6 +357,39 @@
               type="number"
               class="form-control"
               id="inputtele4"
+            />
+          </div>
+
+          <div class="col-md-6">
+            <label for="inputdoctor" class="form-label">Doctor:</label>
+            <input
+            name="doctor"
+            value="<%= obj.doctor %>"
+              type="doctor"
+              class="form-control"
+              id="inputdoctor"
+            />
+          </div>
+
+          <div class="col-md-6">
+            <label for="inputaddress" class="form-label">address:</label>
+            <input
+            name="address"
+            value="<%= obj.address %>"
+              type="address"
+              class="form-control"
+              id="inputaddress"
+            />
+          </div>
+
+          <div class="col-md-6">
+            <label for="inputTypeofOperation" class="form-label">Type of Operation:</label>
+            <input
+            name="TypeofOperation"
+            value="<%= obj.TypeofOperation %>"
+              type="TypeofOperation"
+              class="form-control"
+              id="inputTypeofOperation"
             />
           </div>
 
@@ -394,6 +428,40 @@
               </select>
             </div>
           </div>
+          
+          <div class="col-md-6">
+            <label for="inputBloodType" class="form-label">Blood Type:</label>
+            <select name="bloodType" id="inputBloodType" class="form-select">
+              <option selected hidden disabled>Choose here ...</option>
+              <option <%= obj.blood_type === "A+" ? "selected" : "" %>>A+</option>
+              <option <%= obj.blood_type === "A-" ? "selected" : "" %>>A-</option>
+              <option <%= obj.blood_type === "B+" ? "selected" : "" %>>B+</option>
+              <option <%= obj.blood_type === "B-" ? "selected" : "" %>>B-</option>
+              <option <%= obj.blood_type === "AB+" ? "selected" : "" %>>AB+</option>
+              <option <%= obj.blood_type === "AB-" ? "selected" : "" %>>AB-</option>
+              <option <%= obj.blood_type === "O+" ? "selected" : "" %>>O+</option>
+              <option <%= obj.blood_type === "O-" ? "selected" : "" %>>O-</option>
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label for="inputDepartment" class="form-label">Department:</label>
+            <select class="form-select" id="inputDepartment" name="Department" required>
+              <option value="" disabled selected>Select Department</option>
+              <option value="General" <%= obj.department === "General" ? "selected" : "" %>>General </option>
+              <option value="Orthopedic" <%= obj.department === "Orthopedic" ? "selected" : "" %>>Orthopedic</option>
+              <option value="ENT" <%= obj.department === "ENT" ? "selected" : "" %>>ENT</option>
+              <option value="Vascular" <%= obj.department === "Vascular" ? "selected" : "" %>>Vascular</option>
+              <option value="Plastic" <%= obj.department === "Plastic" ? "selected" : "" %>>Plastic </option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <label for="notes" class="form-label">notes</label>
+            <textarea class="form-control" id="notes" name="notes" rows="3" placeholder=" notes"></textarea>
+          </div>
+          
+          
 
           <div class="col-12">
             <button type="submit" class="btn btn-primary">
@@ -405,7 +473,7 @@
               type="button"
               class="btn btn-danger"
             >
-              Delete Customer
+              Delete patient
             </button>
           </div>
         </form>
@@ -423,7 +491,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h1 class="modal-title fs-5" id="exampleModalLabel">
-              Delete Customer
+              Delete patient
             </h1>
             <button
               type="button"
@@ -432,7 +500,7 @@
               aria-label="Close"
             ></button>
           </div>
-          <div class="modal-body">Are you sure you want to continue deleting the customer?</div>
+          <div class="modal-body">Are you sure you want to continue deleting the patient?</div>
           <div class="modal-footer">
             <button
               type="button"

@@ -21,6 +21,22 @@
     <link href="../css/bootstrap.min.css" rel="stylesheet" />
 
     <style>
+
+table {
+    opacity: 0.8; /* 0.8 تعني شفافية 80% */
+}
+
+     body {
+    background-image: url('/img/Zlhospital-removebg-preview_processed.png'); /* مسار الصورة الخلفية */
+    background-size: contain; /* لتصغير الصورة بحيث تبين كاملة داخل الخلفية */
+    background-position: center; /* محاذاة الصورة في المنتصف */
+    background-repeat: no-repeat; /* عدم تكرار الصورة */
+    background-attachment: fixed; /* لتثبيت الخلفية أثناء التمرير */
+    margin: 10;
+    font-family: Arial, sans-serif; /* تحديد نوع الخط */
+    color: white; /* تحديد لون النص */
+}
+
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -245,7 +261,7 @@
               <svg class="bi pe-none me-2" width="16" height="16">
                 <use xlink:href="#people-circle" />
               </svg>
-              <span class="sidebar-text"> Add customers </span>
+              <span class="sidebar-text"> Add patients </span>
             </a>
           </li>
         </ul>
@@ -283,22 +299,16 @@
           <div
             class="container-fluid justify-content-center justify-content-md-between"
           >
+
+          <img src="/img/Zlhospital-removebg-preview_processed.png" alt="Example Image" width="90" height="90" />
+
             <a class="navbar-brand fw-medium fs-3 mb-1 mb-md-0"
               >Zliten Medical Center</a
             >
 
-            <form class="d-flex" role="search">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form>
-          </div>
+            <img src="/img/Zlhospital-removebg-preview_processed.png" alt="Example Image" width="90" height="90" />
+
+
         </nav>
 
         <nav
@@ -341,8 +351,18 @@
     </tr>
 
     <tr>
-      <th scope="row">Email</th>
-      <td><%= obj.email %></td>
+      <th scope="row">Doctor</th>
+      <td><%= obj.doctor %></td>
+    </tr>
+
+    <tr>
+      <th scope="row">address</th>
+      <td><%= obj.address %></td>
+    </tr>
+ 
+    <tr>
+      <th scope="row">Type of Operation</th>
+      <td><%= obj.TypeofOperation %></td>
     </tr>
 
     <tr>
@@ -359,6 +379,22 @@
       <th scope="row">Country</th>
       <td><%= obj.country %></td>
     </tr>
+
+    <tr>
+      <th scope="row">Blood Type</th>
+      <td><%= obj.bloodType %></td>
+    </tr>
+
+    <tr>
+      <th scope="row">Department</th>
+      <td><%= obj.Department %></td>
+    </tr>
+
+    <tr>
+      <th scope="row">notes</th>
+      <td><%= obj.notes %></td>
+    </tr>
+    
 
     <tr>
       <th scope="row">Created on</th>

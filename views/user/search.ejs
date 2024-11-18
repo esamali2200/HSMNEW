@@ -21,6 +21,22 @@
     <link href="../css/bootstrap.min.css" rel="stylesheet" />
 
     <style>
+
+table {
+    opacity: 0.8; /* 0.8 تعني شفافية 80% */
+}
+
+body {
+    background-image: url('/img/Zlhospital-removebg-preview_processed.png'); /* مسار الصورة الخلفية */
+    background-size: contain; /* لتصغير الصورة بحيث تبين كاملة داخل الخلفية */
+    background-position: center; /* محاذاة الصورة في المنتصف */
+    background-repeat: no-repeat; /* عدم تكرار الصورة */
+    background-attachment: fixed; /* لتثبيت الخلفية أثناء التمرير */
+    margin: 10;
+    font-family: Arial, sans-serif; /* تحديد نوع الخط */
+    color: white; /* تحديد لون النص */
+}
+
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -245,7 +261,7 @@
             <svg class="bi pe-none me-2" width="16" height="16">
               <use xlink:href="#people-circle" />
             </svg>
-            <span class="sidebar-text"> Add customers </span>
+            <span class="sidebar-text"> Add patients </span>
           </a>
         </li>
       </ul>
@@ -283,9 +299,14 @@
           <div
             class="container-fluid justify-content-center justify-content-md-between"
           >
+
+          <img src="/img/zlhospital-removebg-preview_processed.png" alt="Example Image" width="90" height="90" />
+
             <a class="navbar-brand fw-medium fs-3 mb-1 mb-md-0"
               >Zliten Medical Center</a
             >
+             
+          <img src="/img/zlhospital-removebg-preview_processed.png" alt="Example Image" width="90" height="90" />
 
             <form class="d-flex" role="search">
               <input
@@ -309,8 +330,9 @@
             <tr>
               <th scope="col">#</th>
               <th scope="col">Full Name</th>
-              <th scope="col">Gender</th>
+              <th scope="col">Department</th>
               <th scope="col">Country</th>
+              <th scope="col">blood Type</th>
 
               <th scope="col">Action</th>
             </tr>
@@ -320,9 +342,9 @@
               <tr>
                 <th scope="row"><%= index+1 %></th>
                 <td><%= item.FirstName %> <%= item.lastName %></td>
-                <td><%= item.gender %></td>
+                <td><%= item.Department %></td>
                 <td><%= item.country %></td>
-  
+                <td><%= item.bloodType %></td>
                 <td>
                   <a
                     data-bs-toggle="tooltip"
@@ -336,7 +358,7 @@
                 
                   <a
                     data-bs-toggle="tooltip"
-                    data-bs-title="Edit Customer"
+                    data-bs-title="Edit patient"
                     data-bs-placement="top"
                     class="btn btn-primary btn-sm"
                     href="./edit/<%= item._id %>"

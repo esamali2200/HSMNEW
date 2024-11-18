@@ -21,6 +21,18 @@
     <link href="../css/bootstrap.min.css" rel="stylesheet" />
 
     <style>
+      
+      body {
+    background-image: url('/img/Zlhospital-removebg-preview_processed.png'); /* مسار الصورة الخلفية */
+    background-size: contain; /* لتصغير الصورة بحيث تبين كاملة داخل الخلفية */
+    background-position: center; /* محاذاة الصورة في المنتصف */
+    background-repeat: no-repeat; /* عدم تكرار الصورة */
+    background-attachment: fixed; /* لتثبيت الخلفية أثناء التمرير */
+    margin: 10;
+    font-family: Arial, sans-serif; /* تحديد نوع الخط */
+    color: white; /* تحديد لون النص */
+}
+
       .bd-placeholder-img {
         font-size: 1.125rem;
         text-anchor: middle;
@@ -245,7 +257,7 @@
             <svg class="bi pe-none me-2" width="16" height="16">
               <use xlink:href="#people-circle" />
             </svg>
-            <span class="sidebar-text"> Add customers </span>
+            <span class="sidebar-text"> Add patients </span>
           </a>
         </li>
       </ul>
@@ -283,22 +295,15 @@
           <div
             class="container-fluid justify-content-center justify-content-md-between"
           >
+
+          <img src="/img/Zlhospital-removebg-preview_processed.png" alt="Example Image" width="90" height="90" />
+
             <a class="navbar-brand fw-medium fs-3 mb-1 mb-md-0"
               >Zliten Medical Center</a
             >
+            <img src="/img/Zlhospital-removebg-preview_processed.png" alt="Example Image" width="90" height="90" />
 
-            <form class="d-flex" role="search">
-              <input
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </form>
-          </div>
+            
         </nav>
 
         <form action="/user/add/html" method="post" class="mx-0 row gx-3 gy-4 mt-3">
@@ -323,15 +328,6 @@
           </div>
 
           <div class="col-md-6">
-            <label for="inputemail4" class="form-label">Email:</label>
-            <input name="email"
-              placeholder="ali@gmail.com"
-              type="email"
-              class="form-control"
-              id="inputemail4"
-            />
-          </div>
-          <div class="col-md-6">
             <label for="inputtele4" class="form-label">Telephone:</label>
             <input name="mobileNumber"
               placeholder="011987899"
@@ -340,6 +336,36 @@
               id="inputtele4"
             />
           </div>
+
+          <div class="col-md-6">
+            <label for="inputdoctor" class="form-label">doctor:</label>
+            <input name="doctor"
+              placeholder="doctor"
+              type="doctor"
+              class="form-control"
+              id="inputdoctor"
+            />
+          </div>
+
+          <div class="col-md-6">
+            <label for="inputaddress" class="form-label">address:</label>
+            <input name="address"
+              placeholder="address"
+              type="address"
+              class="form-control"
+              id="inputaddress"
+            /> 
+          </div>
+          <div class="col-md-6">
+            <label for="inputTypeofOperation" class="form-label">Type of Operation:</label>
+            <input name="TypeofOperation"
+              placeholder="TypeofOperation"
+              type="TypeofOperation"
+              class="form-control"
+              id="inputTypeofOperation"
+            />  
+          </div>
+          
 
           <div>
             <div class="col-md-6">
@@ -351,6 +377,32 @@
                 id="inputage4"
               />
             </div>
+          </div>
+          <div class="col-md-6">
+            <label for="inputbloodType" class="form-label">blood Type:</label>
+            <select class="form-select" id="inputbloodType" name="bloodType" required>
+              <option value="" disabled selected>select bloodType </option>
+              <option value="A+">A+</option>
+              <option value="A-">A-</option>
+              <option value="B+">B+</option>
+              <option value="B-">B-</option>
+              <option value="AB+">AB+</option>
+              <option value="AB-">AB-</option>
+              <option value="O+">O+</option>
+              <option value="O-">O-</option>
+            </select>
+          </div>
+
+          <div class="col-md-6">
+            <label for="inputDepartment" class="form-label">Department:</label>
+            <select class="form-select" id="inputDepartment" name="Department" required>
+              <option value="" disabled selected>select Department </option>
+              <option value="General ">General </option>
+              <option value="Orthopedic">Orthopedic</option>
+              <option value="ENT">ENT</option>
+              <option value="Vascular">Vascular</option>
+              <option value="Plastic">Plastic  </option>
+              </select>
           </div>
 
           <div>
@@ -374,11 +426,18 @@
                 <option>Female</option>
               </select>
             </div>
-          </div>
+
+            
+            <div class="mb-3">
+              <label for="notes" class="form-label">notes</label>
+              <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="  notes "></textarea>
+            </div>
 
           <div class="col-12">
             <button type="submit" class="btn btn-primary">Submit</button>
           </div>
+
+
         </form>
       </section>
     </main>

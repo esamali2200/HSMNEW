@@ -6,11 +6,16 @@ const customerSchema = new Schema(
     {
         FirstName: String,
     lastName: String,
-    email: String,
     mobileNumber: String,
-    age: String,
+    address: String,
+    age: Number,
     country: String,
     gender: String,
+    bloodType: String,
+    Department: String,
+    doctor: String,
+    TypeofOperation: String,
+    notes: String,
     },{ timestamps: true });
  
  

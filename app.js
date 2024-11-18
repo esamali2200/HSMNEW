@@ -25,7 +25,7 @@ liveReloadServer.server.once("connection", () => {
     liveReloadServer.refresh("/");
   }, 100);})
 
-  mongoose.connect("mongodb+srv://app1:DV14zVqWQvCZctiF@cluster0.m2naw.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
+  mongoose.connect("mongodb+srv://esesalal2200:E2s0a0m2@cluster0.m2naw.mongodb.net/all-data?retryWrites=true&w=majority&appName=Cluster0")
   .then(() => {
     app.listen(port, () => {
       console.log(`Server running at http://localhost:${port}`);
@@ -99,6 +99,29 @@ app.post("/search", (req, res) => {
   });
 });
 
+app.post("/fill", (req, res) => {
+  const departmentFilter = req.body.Department; // Get the selected department
+
+  // Construct the query based on the selected department
+  let query = {};
+  if (departmentFilter) {
+    query.Department = departmentFilter; // Filter by selected Department
+  }
+
+  // Find customers based on the department filter
+  customer.find(query)
+    .then((result) => {
+      // Render the filtered results in the view
+      res.render("user/fill", { arr: result });
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).send("Error retrieving data");
+    });
+});
+
+
+
 app.put("/edit/:id", (req, res) => {
   customer.updateOne({ _id: req.params.id }, req.body)
     .then(() => {
@@ -117,4 +140,3 @@ app.delete("/delete/:id", (req, res) => {
     console.log(err);
   });
 });
-
