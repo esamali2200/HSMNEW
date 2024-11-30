@@ -284,7 +284,7 @@ body {
         </span>
 
         <a
-          href="/"
+          href="/H"
           class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
         >
           <i class="bi bi-lightning-charge"></i>
@@ -293,7 +293,7 @@ body {
         <hr />
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item">
-            <a href="/" class="nav-link active" aria-current="page">
+            <a href="/H" class="nav-link active" aria-current="page">
               <svg class="bi pe-none me-2" width="16" height="16">
                 <use xlink:href="#home" />
               </svg>
@@ -313,27 +313,32 @@ body {
         <hr />
         <div class="dropdown">
           <a
-            href="#"
+            href="/"
             class="d-flex align-items-center text-white text-decoration-none dropdown-toggle"
             data-bs-toggle="dropdown"
             aria-expanded="false"
           >
-            <img
-              src="./img/me.JPG"
-              alt=""
-              width="32"
-              height="32"
-              class="rounded-circle me-2"
-            />
-            <strong class="sidebar-text">Ali Hassan</strong>
+          
+            <img src="/img/459100022_830589469254729_5164355412780921420_n.jpg" 
+            alt=""
+             width="32" 
+             height="32"
+              class="rounded-circle me-2">
+
+        
+            <strong class="sidebar-text">ZCM</strong>
           </a>
           <ul class="dropdown-menu dropdown-menu-dark text-small shadow">
             <li><a class="dropdown-item" href="#">New project...</a></li>
             <li><a class="dropdown-item" href="#">Settings</a></li>
             <li><a class="dropdown-item" href="#">Profile</a></li>
             <li><hr class="dropdown-divider" /></li>
-            <li><a class="dropdown-item" href="#">Sign out</a></li>
-          </ul>
+            <li>
+              <li>
+                <a class="dropdown-item" href="/" onclick="signOut()">Sign out</a>
+            </li>
+          </li>
+        </ul>
         </div>
       </div>
 
@@ -352,125 +357,180 @@ body {
             
           <img src="img/zlhospital-removebg-preview_processed.png" alt="Example Image" width="90" height="90" />
 
-          <form action="/search" method="post" class="d-flex flex-column" role="search">
-            <!-- حقل البحث -->
-            <div class="d-flex align-items-center mb-3">
-              <input
-                name="searchText"
-                class="form-control me-2"
-                type="search"
-                placeholder="Search"
-                aria-label="Search"
-              />
-              <button class="btn btn-outline-success" type="submit">
-                Search
-              </button>
-            </div>
-          </form>
-          
-         <form action="/fill" method="post" class="d-flex flex-column" role="fill">
-            <div class="d-flex align-items-center mb-3">
-              
-              <select id="Department" name="Department" class="form-select me-2">
-                <option value="">All Department</option>
-                <option value="General ">General</option>
-                <option value="ENT">ENT</option>
-                <option value="Vascular">Vascular</option>
-                <option value="Plastic ">Plastic</option>
-                <option value="Orthopedic">Orthopedic</option>
-              </select>
-              <button class="btn btn-outline-success" type="submit">
-                Select
-              </button>
-            </div>
-          </form>  
-             
-          
           
 
 
-        </nav>
-
-       <% if (arr.length === 0) { %>
-        <h1>No Data Available</h1>
-       <% } else { %>
-       
-        <table
-        style="width: 99%"
-        class="text-center mx-auto table mt-5 table-striped table-bordered"
-      >
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Full Name</th>
-          <th scope="col">Department</th>
-          <th scope="col">Country</th>
-          <th scope="col">Age</th>
-          <th scope="col">blood Type</th>
-          <th scope="col">Last updated</th><!-- Last updated column -->
-          <th scope="col">Action</th> <!-- Action column -->
-        </tr>
-      </thead>
-      <tbody>
-        <% arr.forEach((item, index) => { %>
-          <tr>
-            <th scope="row"><%= index + 1 %></th>
-            
-            <td><%= item.FirstName %> <%= item.lastName %></td>
-            <td><%= item.Department %></td>
-            <td><%= item.country %></td>
-            <td><%= item.age %></td> 
-            <td><%= item.bloodType %></td>
-            <td><%= moment(item.updatedAt).fromNow(); %></td> <!-- Display time since last update -->
-            <td>
-              <a
-                data-bs-toggle="tooltip"
-                data-bs-title="View details"
-                data-bs-placement="top"
-                class="btn btn-primary btn-sm"
-                href="./user/<%= item._id %>"
-              >
-                <i class="bi bi-eye"></i>
-              </a>
-            
-              <a
-                data-bs-toggle="tooltip"
-                data-bs-title="Edit patients"
-                data-bs-placement="top"
-                class="btn btn-primary btn-sm"
-                href="./edit/<%= item._id %>"
-              >
-                <i class="bi bi-pencil"></i>
-              </a>
-            
-              <!-- Form for Delete button -->
-              <form action="/delete/<%= item._id %>?_method=DELETE" method="post" style="display: inline;">
-                <button
-                  type="submit"
-                  data-bs-toggle="tooltip"
-                  data-bs-title="Delete user"
-                  data-bs-placement="top"
-                  class="btn btn-danger btn-sm"
-                >
-                  <i class="bi bi-trash"></i>
-                </button>
+            <div class="container mt-3">
+              <!-- Search Form -->
+              <form id="searchForm" class="d-flex flex-column mb-3" onsubmit="return false;">
+                  <div class="d-flex align-items-center">
+                      <input
+                          id="searchInput"
+                          type="text"
+                          class="form-control me-2"
+                          placeholder="Search by name, department, etc."
+                          onkeyup="applySearch()"
+                      />
+                      <button type="button" class="btn btn-outline-danger" onclick="clearSearch()">Clear</button>
+                  </div>
               </form>
-            </td>
-             <!-- Action buttons retained here -->
-          </tr>
-        <% }) %>
-      </tbody>
-      
+          </div>
+          
 
-      <% } %>
-        
-        
-      </section>
-    </main>
-    <script src="./js/bootstrap.bundle.min.js"></script>
 
-    <script src="./js/sidebars.js"></script>
+          <div class="container mt-3">
+            <!-- نموذج الفلترة -->
+            <form id="filterForm" class="d-flex flex-column mb-3" onsubmit="return false;">
+                <div class="d-flex align-items-center">
+                    <select id="Department" name="Department" class="form-select me-2">
+                        <option value="">All Departments</option>
+                        <option value="General Surgery">General Surgery</option>
+                        <option value="Orthopedics">Orthopedics</option>
+                        <option value="ENT">ENT (Ear, Nose & Throat)</option>
+                        <option value="Urology">Urology</option>
+                        <option value="Plastic Surgery">Plastic Surgery</option>
+                        <option value="Neurosurgery">Neurosurgery</option>
+                        <option value="OB/GYN">OB/GYN (Obstetrics & Gynecology)</option>
+                        <option value="Cardiothoracic Surgery">Cardiothoracic Surgery</option>
+                        <option value="Ophthalmology">Ophthalmology</option>
+                        <option value="Cardiology">Cardiology (Cardiac Catheterization)</option>
+                    </select>
+                    <button type="button" class="btn btn-outline-success" onclick="applyFilter()">Select</button>
+                </div>
+            </form>
+        </div>
+        <!-- عرض السجلات -->
+            <% if (arr.length === 0) { %>
+                <h1>No Data Available</h1>
+            <% } else { %>
+              <table
+              style="width: 99%"
+              class="text-center mx-auto table mt-5 table-striped table-bordered"
+            >
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Full Name</th>
+                <th scope="col">Department</th>
+                <th scope="col">surgeon name</th>
+                <th scope="col">Type of Operation</th>
+                <th scope="col">diagnosis</th>
+                <th scope="col">Surgery Date</th>
+                <th scope="col">fileNU</th>
+                <!-- Last updated column -->
+                <th scope="col">Action</th> <!-- Action column -->
+              </tr>
+            </thead>
+            <tbody id="patientBody">
+                <% arr.forEach((item, index) => { %>
+                    <tr>
+                        <th scope="row"><%= index + 1 %></th>
+                        <td><%= item.FirstName %> <%= item.lastName %></td>
+                        <td><%= item.Department %></td>
+                        <td><%= item.surgeon %></td>
+                        <td><%= item.TypeofOperation %></td>
+                        <td><%= item.diagnosis %></td>
+                        <td><%= moment(item.createdAt).format('YYYY/DD/MM') %></td>
+                        <td><%= item.fileNU %></td>
+                        <td>
+                          
+                            <!-- Action buttons placed here -->
+                            <a
+                                data-bs-toggle="tooltip"
+                                data-bs-title="View details"
+                                data-bs-placement="top"
+                                class="btn btn-primary btn-sm"
+                                href="./user/<%= item._id %>"
+                            >
+                                <i class="bi bi-eye"></i>
+                            </a>
+                            <a
+                                data-bs-toggle="tooltip"
+                                data-bs-title="Edit patients"
+                                data-bs-placement="top"
+                                class="btn btn-primary btn-sm"
+                                href="./edit/<%= item._id %>"
+                            >
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                           
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+            </table>
+            <% } %>
+          </div>
+            
+          <script>
+            // Function to apply the filter
+            function applyFilter() {
+              const selectedDepartment = document.getElementById('Department').value;
+              const rows = document.querySelectorAll("tbody tr");
+          
+              rows.forEach(row => {
+                const departmentCell = row.cells[2].textContent; // Department is in the 3rd column (index 2)
+          
+                if (selectedDepartment === "" || departmentCell === selectedDepartment) {
+                  row.style.display = ""; // Show row if it matches the department or if "All Departments" is selected
+                } else {
+                  row.style.display = "none"; // Hide row if it doesn't match the department
+                }
+              });
+          
+              applySearch(); // Apply search after filtering to update the visibility of search results
+            }
+          
+            // Function to apply search
+            function applySearch() {
+              const searchValue = document.getElementById("searchInput").value.toLowerCase();
+              const rows = document.querySelectorAll("tbody tr");
+          
+              rows.forEach(row => {
+                const departmentCell = row.cells[2].textContent; // Department is in the 3rd column (index 2)
+                const rowText = row.textContent.toLowerCase(); // All text in the row
+          
+                // Check if the row is visible (after department filter) and if it matches the search term
+                if (row.style.display !== "none" && rowText.includes(searchValue)) {
+                  row.style.display = ""; // Show row
+                } else {
+                  row.style.display = "none"; // Hide row
+                }
+              });
+            }
+          
+            // Function to clear the search input
+            function clearSearch() {
+              document.getElementById("searchInput").value = ""; // Clear search input
+              applySearch(); // Reset the table display
+            }
 
-    <script src="./js/main.js"></script>
-  </body>
-</html>
+            
+    function signOut() {
+        fetch('/', {
+            method: 'POST',
+            credentials: 'include' // تأكد من تضمين الكوكيز
+        })
+        .then(response => {
+            if (response.ok) {
+                // إعادة توجيه المستخدم إلى صفحة تسجيل الدخول
+                window.location.href = '/'; // تغيير هذا إلى صفحة تسجيل الدخول الخاصة بك
+            } else {
+                alert('حدث خطأ أثناء تسجيل الخروج.');
+            }
+        });
+    }
+
+          </script>
+          
+
+
+            </section>
+            </main>
+            <script src="./js/bootstrap.bundle.min.js"></script>
+            <script src="./js/sidebars.js"></script>
+            <script src="./js/main.js"></script>
+            </body>
+            </html>
+            
+            

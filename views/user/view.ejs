@@ -239,7 +239,7 @@ table {
         </span>
 
         <a
-          href="/"
+          href="/H"
           class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
         >
           <i class="bi bi-lightning-charge"></i>
@@ -248,7 +248,7 @@ table {
         <hr />
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item">
-            <a href="/" class="nav-link  text-white" aria-current="page">
+            <a href="/H" class="nav-link  text-white" aria-current="page">
               <svg class="bi pe-none me-2" width="16" height="16">
                 <use xlink:href="#home" />
               </svg>
@@ -317,7 +317,7 @@ table {
           aria-label="breadcrumb"
         >
           <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/H">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">
               <%= obj.FirstName %> <%= obj.lastName %>
             </li>
@@ -351,9 +351,72 @@ table {
     </tr>
 
     <tr>
-      <th scope="row">Doctor</th>
-      <td><%= obj.doctor %></td>
+      <th scope="row">file number</th>
+      <td><%= obj.fileNU %></td>
     </tr>
+
+
+
+
+    <tr>
+      <th scope="row">Admission Date</th>
+      <td> <%= moment(obj.AdmissionDate).format('YYYY/DD/MM') %></td>
+    </tr>
+  
+     
+    <tr>
+      <th scope="row">surgeon</th>
+      <td><%= obj.surgeon %></td>
+    </tr>
+
+    <tr>
+      <th scope="row">surgeon Assistent 1</th>
+      <td><%= obj.surgeonAssistent1 %></td>
+    </tr>
+
+    <tr>
+      <th scope="row">surgeon Assistent 2</th>
+      <td><%= obj.surgeonAssistent2 %></td>
+    </tr>
+
+    <tr>
+      <th scope="row">surgeon Assistent 3</th>
+      <td><%= obj.surgeonAssistent3 %></td>
+    </tr>
+
+
+    <tr>
+      <th scope="row">Anasthesiologist 1</th>
+      <td><%= obj.Anasthesiologist1 %></td>
+    </tr>
+    
+    <tr>
+      <th scope="row">Anasthesiologist 2</th>
+      <td><%= obj.Anasthesiologist2 %></td>
+    </tr>
+
+    <tr>
+      <th scope="row">Type Of Anasthesia</th>
+      <td><%= obj.TypeOfAnasthesia %></td>
+    </tr>
+
+    <tr>
+      <th scope="row">Scrub 1</th>
+      <td><%= obj.Scrub1 %></td>
+    </tr>
+
+    <tr>
+      <th scope="row">Scrub 2</th>
+      <td><%= obj.Scrub2 %></td>
+    </tr>
+
+    <tr>
+      <th scope="row">Anasthesia Technia </th>
+      <td><%= obj.AnasthesiaTechnia %></td>
+    </tr>
+
+
+    
 
     <tr>
       <th scope="row">address</th>
@@ -388,6 +451,11 @@ table {
     <tr>
       <th scope="row">Department</th>
       <td><%= obj.Department %></td>
+    </tr>
+
+    <tr>
+      <th scope="row">diagnosis</th>
+      <td><%= obj.diagnosis %></td>
     </tr>
 
     <tr>

@@ -39,7 +39,33 @@ liveReloadServer.server.once("connection", () => {
 const customer = require("./models/customerSchema");
 
 // Routes
+
+// مسار GET لعرض صفحة تسجيل الدخول
 app.get('/', (req, res) => {
+  customer.find()
+    .then((result) => {
+      res.render("user/login", { arr: result, moment: moment });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+// مسار POST لمعالجة تسجيل الدخول
+
+
+app.post('/', (req, res) => {
+  const { username, password } = req.body;
+  // تحقق من بيانات الدخول هنا
+  if (username === 'admin1234' && password === 'admin1234') {
+     // تخزين اسم المستخدم في الجلسة
+    res.redirect('/H');
+  } else {
+      res.render('user/login', { error: 'Invalid username or password' });
+  }
+});
+
+app.get('/H', (req, res) => {
   customer.find()
     .then((result) => {
       res.render("index", { arr: result, moment: moment });
@@ -76,7 +102,7 @@ app.get("/user/:id", (req, res) => {
 app.post("/user/add/html", (req, res) => {
   customer.create(req.body)
     .then(() => {
-      res.redirect("/");
+      res.redirect("/H");
     })
     .catch((err) => {
       console.log(err);

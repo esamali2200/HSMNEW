@@ -499,3 +499,84 @@ body {
     <script src="./js/main.js"></script>
   </body>
 </html>
+
+
+
+      <script>
+      function applyFilter() {
+          const filterText = document.getElementById('FilterInput').value.toLowerCase();
+          const selectedCategory = document.getElementById('FilterCategory').value;
+          const rows = document.querySelectorAll('tbody tr');
+      
+          rows.forEach(row => {
+              let cellText;
+              switch (selectedCategory) {
+                  case 'General': // By Name
+                      cellText = row.cells[1].textContent.toLowerCase();
+                      break;
+                  case 'ENT': // By Roll No
+                      cellText = row.cells[2].textContent.toLowerCase();
+                      break;
+                  case 'Vascular': // By Department
+                      cellText = row.cells[3].textContent.toLowerCase();
+                      break;
+                  case 'Plastic': // By Gender
+                      cellText = row.cells[4].textContent.toLowerCase();
+                      break;
+                      case 'Orthopedic': // By Gender
+                      cellText = row.cells[4].textContent.toLowerCase();
+                      break;
+                  default:
+                      cellText = '';
+              }
+      
+              if (cellText.includes(filterText)) {
+                  row.style.display = ""; 
+              } else {
+                  row.style.display = "none"; 
+              }
+          });
+      }
+      </script>
+
+
+
+
+
+      
+// مسار GET لعرض صفحة تسجيل الدخول
+app.get('/', (req, res) => {
+  customer.find()
+    .then((result) => {
+      res.render("user/login", { arr: result, moment: moment });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});
+
+// مسار POST لمعالجة تسجيل الدخول
+
+
+app.post('/', (req, res) => {
+  const { username, password } = req.body;
+  // تحقق من بيانات الدخول هنا
+  if (username === 'admin1234' && password === 'admin1234') {
+     // تخزين اسم المستخدم في الجلسة
+    res.redirect('/H');
+  } else {
+      res.render('user/login', { error: 'Invalid username or password' });
+  }
+});
+
+
+
+app.get('/H', (req, res) => {
+  customer.find()
+    .then((result) => {
+      res.render("index", { arr: result, moment: moment });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+});

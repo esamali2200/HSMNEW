@@ -235,7 +235,7 @@
       </span>
 
       <a
-        href="/"
+        href="/H"
         class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
       >
         <i class="bi bi-lightning-charge"></i>
@@ -244,7 +244,7 @@
       <hr />
       <ul class="nav nav-pills flex-column mb-auto">
         <li class="nav-item">
-          <a href="/" class="nav-link text-white" aria-current="page">
+          <a href="/H" class="nav-link text-white" aria-current="page">
             <svg class="bi pe-none me-2" width="16" height="16">
               <use xlink:href="#home" />
             </svg>
@@ -283,7 +283,7 @@
           <li><a class="dropdown-item" href="#">Settings</a></li>
           <li><a class="dropdown-item" href="#">Profile</a></li>
           <li><hr class="dropdown-divider" /></li>
-          <li><a class="dropdown-item" href="#">Sign out</a></li>
+          <li><a class="dropdown-item" href="/">Sign out</a></li>
         </ul>
       </div>
     </div>
@@ -338,12 +338,114 @@
           </div>
 
           <div class="col-md-6">
-            <label for="inputdoctor" class="form-label">doctor:</label>
-            <input name="doctor"
-              placeholder="doctor"
-              type="doctor"
+            <label for="inputAdmissionDate" class="form-label"> admission date :</label>
+            <div class="input-group">
+              <input type="date" name="AdmissionDate" id="inputAdmissionDate" class="form-control">
+              </div>
+          </div>
+          
+
+          <div class="col-md-6">
+            <label for="inputsurgeon" class="form-label">surgeon name:</label>
+            <input name="surgeon"
+              placeholder="surgeon"
+              type="surgeon"
               class="form-control"
-              id="inputdoctor"
+              id="inputsurgeon"
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="inputsurgeonAssistent1" class="form-label">surgeon assistent 1:</label>
+            <input name="surgeonAssistent1"
+              placeholder="surgeon Assistent 1"
+              type="surgeon Assistent 1"
+              class="form-control"
+              id="inputsurgeonAssistent1"
+            />
+          </div>
+
+          <div class="col-md-6">
+            <label for="inputsurgeonAssistent2" class="form-label">surgeon assistent 2:</label>
+            <input name="surgeonAssistent2"
+              placeholder="surgeon Assistent 2"
+              type="surgeonAssistent2"
+              class="form-control"
+              id="inputsurgeonAssistent2"
+            />
+          </div>
+
+          <div class="col-md-6">
+            <label for="inputsurgeonAssistent3" class="form-label">surgeon assistent 3:</label>
+            <input name="surgeonAssistent3"
+              placeholder="surgeon Assistent 3"
+              type="surgeonAssistent3"
+              class="form-control"
+              id="inputsurgeonAssistent3"
+            />
+          </div>
+
+          <div class="col-md-6">
+            <label for="inputtypeOfAnasthesia" class="form-label">Type of anasthesia:</label>
+            <input name="TypeOfAnasthesia" 
+              placeholder="Type Of Anasthesia"
+              type="typeOfAnasthesia"
+              class="form-control"
+              id="inputtypeOfAnasthesia"
+            />
+          </div>
+
+
+          
+          <div class="col-md-6">
+            <label for="inputtypeOfAnasthesia1" class="form-label">Anasthesiologist 1:</label>
+            <input name="Anasthesiologist1"
+              placeholder="Anasthesiologist1"
+              type="Anasthesiologist1"
+              class="form-control"
+              id="inputAnasthesiologist1"
+            />
+          </div>
+
+          
+          <div class="col-md-6">
+            <label for="inputAnasthesiologist2" class="form-label">Anasthesiologist 2:</label>
+            <input name="Anasthesiologist2"
+              placeholder="Anasthesiologist2"
+              type="Anasthesiologist2"
+              class="form-control"
+              id="inputAnasthesiologist2"
+            />
+          </div>
+          
+          <div class="col-md-6">
+            <label for="inputAnasthesiaTechnia" class="form-label">Anasthesia Technia:</label>
+            <input name="AnasthesiaTechnia" 
+              placeholder="AnasthesiaTechnia"
+              type="AnasthesiaTechnia"
+              class="form-control"
+              id="inputAnasthesiaTechnia"
+            />
+          </div>
+
+          
+          <div class="col-md-6">
+            <label for="inputScrub1" class="form-label">Scrub 1:</label>
+            <input name="Scrub1"
+              placeholder="Scrub 1"
+              type="Scrub1"
+              class="form-control"
+              id="inputScrub1"
+            />
+          </div>
+
+          
+          <div class="col-md-6">
+            <label for="inputScrub2" class="form-label">Scrub 2:</label>
+            <input name="Scrub2"
+              placeholder="Scrub 2"
+              type="Scrub2"
+              class="form-control"
+              id="inputScrub2"
             />
           </div>
 
@@ -358,8 +460,8 @@
           </div>
           <div class="col-md-6">
             <label for="inputTypeofOperation" class="form-label">Type of Operation:</label>
-            <input name="TypeofOperation"
-              placeholder="TypeofOperation"
+            <input name="TypeofOperation" 
+              placeholder="Type of Operation"
               type="TypeofOperation"
               class="form-control"
               id="inputTypeofOperation"
@@ -377,6 +479,18 @@
                 id="inputage4"
               />
             </div>
+
+            <div>
+              <div class="col-md-6">
+                <label for="inputage4" class="form-label">file NU:</label>
+                <input name="fileNU"
+                  placeholder="file number: ..."
+                  type="number"
+                  class="form-control"
+                  id="inputage4"
+                />
+              </div>
+
           </div>
           <div class="col-md-6">
             <label for="inputbloodType" class="form-label">blood Type:</label>
@@ -396,14 +510,20 @@
           <div class="col-md-6">
             <label for="inputDepartment" class="form-label">Department:</label>
             <select class="form-select" id="inputDepartment" name="Department" required>
-              <option value="" disabled selected>select Department </option>
-              <option value="General ">General </option>
-              <option value="Orthopedic">Orthopedic</option>
-              <option value="ENT">ENT</option>
-              <option value="Vascular">Vascular</option>
-              <option value="Plastic">Plastic  </option>
-              </select>
-          </div>
+                <option value="" disabled selected>Select Department</option>
+                <option value="General Surgery">General Surgery</option>
+                <option value="Orthopedics">Orthopedics</option>
+                <option value="ENT">ENT (Ear, Nose & Throat)</option>
+                <option value="Urology">Urology</option>
+                <option value="Plastic Surgery">Plastic Surgery</option>
+                <option value="Neurosurgery">Neurosurgery</option>
+                <option value="OB/GYN">OB/GYN (Obstetrics & Gynecology)</option>
+                <option value="Cardiothoracic Surgery">Cardiothoracic Surgery</option>
+                <option value="Ophthalmology">Ophthalmology</option>
+                <option value="Cardiology">Cardiology (Cardiac Catheterization)</option>
+            </select>
+        </div>
+        
 
           <div>
             <div class="col-md-6">
@@ -413,6 +533,28 @@
 
                 <option>Morocco</option>
                 <option>Egypt</option>
+                <option >Algeria</option>
+<option >Bahrain</option>
+<option >Comoros</option>
+<option >Djibouti</option>
+<option >Egypt</option>
+<option >Iraq</option>
+<option >Jordan</option>
+<option >Kuwait</option>
+<option >Lebanon</option>
+<option >Libya</option>
+<option >Mauritania</option>
+<option >Morocco</option>
+<option >Oman</option>
+<option >Palestine</option>
+<option >Qatar</option>
+<option >Saudi Arabia</option>
+<option >Somalia</option>
+<option >Sudan</option>
+<option >Syria</option>
+<option >Tunisia</option>
+<option >United Arab Emirates</option>
+<option >Yemen</option>
               </select>
             </div>
           </div>
@@ -427,10 +569,16 @@
               </select>
             </div>
 
+
+            <div class="mb-3">
+              <label for="diagnosis" class="form-label">diagnosis</label>
+              <textarea class="form-control" id="diagnosis" name="diagnosis" rows="3" placeholder="diagnosis"></textarea>
+            </div>
             
+
             <div class="mb-3">
               <label for="notes" class="form-label">notes</label>
-              <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="  notes "></textarea>
+              <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="notes"></textarea>
             </div>
 
           <div class="col-12">
@@ -442,7 +590,6 @@
       </section>
     </main>
     <script src="../js/bootstrap.bundle.min.js"></script>
-
     <script src="../js/sidebars.js"></script>
     <script src="../js/main.js"></script>
   </body>
