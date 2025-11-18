@@ -368,6 +368,7 @@ body {
                 
                   <!-- Form for Delete button -->
                   <form action="/delete/<%= item._id %>?_method=DELETE" method="post" style="display: inline;">
+                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                     <button
                       type="submit"
                       data-bs-toggle="tooltip"

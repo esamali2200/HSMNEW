@@ -1201,3 +1201,21 @@ app.delete("/delete/:id", (req, res) => {
     console.log(err);
   });
 });
+
+
+
+
+// Secure session configuration with MongoDB store
+// Prevents session hijacking and ensures secure session management
+app.use(session({
+  secret: 'ZCM_SECRET_KEY_2024',
+  resave: false,
+  saveUninitialized: false,
+  store: store,
+  cookie: {
+    maxAge: 1000 * 60 * 15,    // 15 minutes session timeout
+    httpOnly: true,            // Prevents XSS attacks
+    secure: true,              // Requires HTTPS
+    sameSite: 'strict'         // Prevents CSRF attacks
+  }
+}));

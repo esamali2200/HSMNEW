@@ -17,6 +17,10 @@
     <meta name="generator" content="Hugo 0.112.5" />
     <title>Home page</title>
 
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
     <link href="./css/bootstrap.min.css" rel="stylesheet" />
 
     <style>
@@ -42,8 +46,104 @@ form button {
 }
 
 
+/* Table Styles */
 table {
-    opacity: 0.8; /* 0.8 تعني شفافية 80% */
+    opacity: 0.95;
+    background: rgba(255, 255, 255, 0.98);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.9rem;
+}
+
+table thead {
+    background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+    color: white;
+}
+
+table thead th {
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    padding: 12px 8px;
+    border: none;
+    vertical-align: middle;
+}
+
+table tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+table tbody tr td,
+table tbody tr th {
+    padding: 8px 6px;
+    vertical-align: middle;
+    color: #2c3e50;
+    border-color: #e9ecef;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+table tbody tr:nth-child(odd) {
+    background-color: #ffffff;
+}
+
+table tbody tr:hover {
+    background-color: #e3f2fd !important;
+}
+
+/* Action Buttons */
+.action-buttons-cell {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    align-items: center;
+}
+
+.action-btn {
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: all 0.2s ease;
+    border: 1px solid;
+}
+
+.action-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.action-btn-view {
+    background-color: #17a2b8;
+    border-color: #17a2b8;
+    color: white;
+}
+
+.action-btn-view:hover {
+    background-color: #138496;
+    border-color: #117a8b;
+    color: white;
+}
+
+.action-btn-edit {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+}
+
+.action-btn-edit:hover {
+    background-color: #0056b3;
+    border-color: #004085;
+    color: white;
 }
 
       /* Set the background image for the entire page */
@@ -334,11 +434,14 @@ body {
             <li><a class="dropdown-item" href="#">Profile</a></li>
             <li><hr class="dropdown-divider" /></li>
             <li>
-              <li>
-                <a class="dropdown-item" href="/" onclick="signOut()">Sign out</a>
+              <form action="/logout" method="POST" style="display: inline;">
+                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                <button type="submit" class="dropdown-item">
+                  Sign out
+                </button>
+              </form>
             </li>
-          </li>
-        </ul>
+          </ul>
         </div>
       </div>
 
@@ -360,29 +463,26 @@ body {
           
 
 
-            <div class="container mt-3">
-              <!-- Search Form -->
-              <form id="searchForm" class="d-flex flex-column mb-3" onsubmit="return false;">
-                  <div class="d-flex align-items-center">
+            <div class="container mt-3 mb-4">
+              <!-- Filter and Search Row -->
+              <div class="d-flex gap-2 align-items-center flex-wrap">
+                <!-- Search Input (70%) -->
+                <div style="flex: 0 0 70%; max-width: 70%;">
+                  <div class="position-relative">
+                    <i class="bi bi-search position-absolute" style="left: 12px; top: 50%; transform: translateY(-50%); color: #6c757d; z-index: 10;"></i>
                       <input
                           id="searchInput"
                           type="text"
-                          class="form-control me-2"
+                        class="form-control ps-5"
                           placeholder="Search by name, department, etc."
                           onkeyup="applySearch()"
+                        style="border-radius: 8px; border: 1px solid #dee2e6; box-shadow: 0 2px 4px rgba(0,0,0,0.1); height: 38px;"
                       />
-                      <button type="button" class="btn btn-outline-danger" onclick="clearSearch()">Clear</button>
                   </div>
-              </form>
           </div>
-          
-
-
-          <div class="container mt-3">
-            <!-- نموذج الفلترة -->
-            <form id="filterForm" class="d-flex flex-column mb-3" onsubmit="return false;">
-                <div class="d-flex align-items-center">
-                    <select id="Department" name="Department" class="form-select me-2">
+                <!-- Department Filter (20%) -->
+                <div style="flex: 0 0 20%; max-width: 20%;">
+                  <select id="Department" name="Department" class="form-select" onchange="updateTableVisibility()" style="border-radius: 8px; border: 1px solid #dee2e6; box-shadow: 0 2px 4px rgba(0,0,0,0.1); height: 38px;">
                         <option value="">All Departments</option>
                         <option value="General Surgery">General Surgery</option>
                         <option value="Orthopedics">Orthopedics</option>
@@ -395,30 +495,40 @@ body {
                         <option value="Ophthalmology">Ophthalmology</option>
                         <option value="Cardiology">Cardiology (Cardiac Catheterization)</option>
                     </select>
-                    <button type="button" class="btn btn-outline-success" onclick="applyFilter()">Select</button>
                 </div>
-            </form>
+                <!-- Buttons (10%) -->
+                <div style="flex: 0 0 10%; max-width: 10%;">
+                  <div class="d-flex gap-1">
+                    <button type="button" class="btn btn-outline-success btn-sm flex-fill" onclick="applyFilter()" style="border-radius: 8px; height: 38px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #28a745; font-size: 0.85rem; padding: 0.25rem 0.5rem;">
+                      <i class="bi bi-funnel"></i>
+                    </button>
+                    <button type="button" class="btn btn-outline-danger btn-sm flex-fill" onclick="clearSearch()" style="border-radius: 8px; height: 38px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); border: 1px solid #dc3545; font-size: 0.85rem; padding: 0.25rem 0.5rem;">
+                      <i class="bi bi-x-circle"></i>
+                    </button>
+                  </div>
+                </div>
+              </div>
         </div>
         <!-- عرض السجلات -->
             <% if (arr.length === 0) { %>
-                <h1>No Data Available</h1>
+                <h1 class="text-center mt-5">No Data Available</h1>
             <% } else { %>
+              <div class="container mt-4">
               <table
-              style="width: 99%"
-              class="text-center mx-auto table mt-5 table-striped table-bordered"
+                  style="width: 100%"
+                  class="text-center mx-auto table table-striped table-bordered"
             >
             <thead>
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Full Name</th>
                 <th scope="col">Department</th>
-                <th scope="col">surgeon name</th>
+                <th scope="col">Surgeon Name</th>
                 <th scope="col">Type of Operation</th>
-                <th scope="col">diagnosis</th>
+                <th scope="col">Diagnosis</th>
                 <th scope="col">Surgery Date</th>
-                <th scope="col">fileNU</th>
-                <!-- Last updated column -->
-                <th scope="col">Action</th> <!-- Action column -->
+                <th scope="col">File Number</th>
+                <th scope="col">Action</th>
               </tr>
             </thead>
             <tbody id="patientBody">
@@ -427,99 +537,104 @@ body {
                         <th scope="row"><%= index + 1 %></th>
                         <td><%= item.FirstName %> <%= item.lastName %></td>
                         <td><%= item.Department %></td>
-                        <td><%= item.surgeon %></td>
-                        <td><%= item.TypeofOperation %></td>
-                        <td><%= item.diagnosis %></td>
-                        <td><%= moment(item.createdAt).format('YYYY/DD/MM') %></td>
-                        <td><%= item.fileNU %></td>
+                        <td><%= item.surgeon || '—' %></td>
+                        <td><%= item.TypeofOperation || '—' %></td>
+                        <td><%= item.diagnosis || '—' %></td>
+                        <td><%= moment(item.createdAt).format('YYYY/MM/DD') %></td>
+                        <td><%= item.fileNU || '—' %></td>
                         <td>
-                          
-                            <!-- Action buttons placed here -->
+                            <div class="action-buttons-cell">
                             <a
                                 data-bs-toggle="tooltip"
                                 data-bs-title="View details"
                                 data-bs-placement="top"
-                                class="btn btn-primary btn-sm"
-                                href="./user/<%= item._id %>"
+                                    class="action-btn action-btn-view"
+                                    href="/user/<%= item._id %>"
                             >
                                 <i class="bi bi-eye"></i>
                             </a>
                             <a
                                 data-bs-toggle="tooltip"
-                                data-bs-title="Edit patients"
+                                    data-bs-title="Edit patient"
                                 data-bs-placement="top"
-                                class="btn btn-primary btn-sm"
-                                href="./edit/<%= item._id %>"
+                                    class="action-btn action-btn-edit"
+                                    href="/edit/<%= item._id %>"
                             >
                                 <i class="bi bi-pencil"></i>
                             </a>
-                           
+                            </div>
                         </td>
                     </tr>
                 <% }) %>
             </tbody>
             </table>
+              </div>
             <% } %>
           </div>
             
           <script>
             // Function to apply the filter
-            function applyFilter() {
-              const selectedDepartment = document.getElementById('Department').value;
-              const rows = document.querySelectorAll("tbody tr");
+            function updateTableVisibility() {
+              const selectedDepartment = (document.getElementById('Department').value || '').trim().toLowerCase();
+              const searchValue = (document.getElementById('searchInput').value || '').trim().toLowerCase();
+              const rows = document.querySelectorAll('tbody tr');
           
               rows.forEach(row => {
-                const departmentCell = row.cells[2].textContent; // Department is in the 3rd column (index 2)
-          
-                if (selectedDepartment === "" || departmentCell === selectedDepartment) {
-                  row.style.display = ""; // Show row if it matches the department or if "All Departments" is selected
-                } else {
-                  row.style.display = "none"; // Hide row if it doesn't match the department
-                }
+                const departmentCellText = (row.cells[2] && row.cells[2].textContent) ? row.cells[2].textContent : '';
+                const departmentCell = departmentCellText.trim().toLowerCase();
+                const rowText = (row.textContent || '').toLowerCase();
+
+                const deptMatch = selectedDepartment === '' || departmentCell.includes(selectedDepartment);
+                const textMatch = searchValue === '' || rowText.includes(searchValue);
+
+                row.style.display = (deptMatch && textMatch) ? '' : 'none';
               });
-          
-              applySearch(); // Apply search after filtering to update the visibility of search results
             }
+
+            function applyFilter() { updateTableVisibility(); }
           
             // Function to apply search
-            function applySearch() {
-              const searchValue = document.getElementById("searchInput").value.toLowerCase();
-              const rows = document.querySelectorAll("tbody tr");
-          
-              rows.forEach(row => {
-                const departmentCell = row.cells[2].textContent; // Department is in the 3rd column (index 2)
-                const rowText = row.textContent.toLowerCase(); // All text in the row
-          
-                // Check if the row is visible (after department filter) and if it matches the search term
-                if (row.style.display !== "none" && rowText.includes(searchValue)) {
-                  row.style.display = ""; // Show row
-                } else {
-                  row.style.display = "none"; // Hide row
-                }
-              });
-            }
+            function applySearch() { updateTableVisibility(); }
           
             // Function to clear the search input
             function clearSearch() {
-              document.getElementById("searchInput").value = ""; // Clear search input
-              applySearch(); // Reset the table display
+              document.getElementById("searchInput").value = "";
+              updateTableVisibility();
             }
 
+            // Bind events to keep table in sync
+            document.getElementById('Department').addEventListener('change', updateTableVisibility);
+            document.getElementById('searchInput').addEventListener('keyup', updateTableVisibility);
+            // Initial run
+            updateTableVisibility();
+
+            // Initialize Bootstrap tooltips
+            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+            var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+              return new bootstrap.Tooltip(tooltipTriggerEl);
+            });
+
             
-    function signOut() {
-        fetch('/', {
-            method: 'POST',
-            credentials: 'include' // تأكد من تضمين الكوكيز
-        })
-        .then(response => {
-            if (response.ok) {
-                // إعادة توجيه المستخدم إلى صفحة تسجيل الدخول
-                window.location.href = '/'; // تغيير هذا إلى صفحة تسجيل الدخول الخاصة بك
-            } else {
-                alert('حدث خطأ أثناء تسجيل الخروج.');
-            }
-        });
-    }
+
+    window.history.pushState(null, null, window.location.href);
+        window.onpopstate = function () {
+            window.history.pushState(null, null, window.location.href);
+        };
+
+        // Auth check disabled to avoid URL noise in dev; re-enable if needed
+        // function checkAuth() {
+        //     fetch('/check-auth')
+        //         .then(response => {
+        //             if (!response.ok) {
+        //                 window.location.href = '/';
+        //             }
+        //         })
+        //         .catch(() => {
+        //             window.location.href = '/';
+        //         });
+        // }
+        // setInterval(checkAuth, 5000);
+        
 
           </script>
           

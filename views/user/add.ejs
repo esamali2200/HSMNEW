@@ -16,21 +16,211 @@
       content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
     />
     <meta name="generator" content="Hugo 0.112.5" />
-    <title>Home page</title>
+    <title>Add Patient - Multi Step Form</title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet" />
 
     <style>
-      
       body {
-    background-image: url('/img/Zlhospital-removebg-preview_processed.png'); /* مسار الصورة الخلفية */
-    background-size: contain; /* لتصغير الصورة بحيث تبين كاملة داخل الخلفية */
-    background-position: center; /* محاذاة الصورة في المنتصف */
-    background-repeat: no-repeat; /* عدم تكرار الصورة */
-    background-attachment: fixed; /* لتثبيت الخلفية أثناء التمرير */
+        background-image: url('/img/Zlhospital-removebg-preview_processed.png');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
     margin: 10;
-    font-family: Arial, sans-serif; /* تحديد نوع الخط */
-    color: white; /* تحديد لون النص */
+        font-family: Arial, sans-serif;
+        color: white;
+      }
+
+      .wizard-container {
+        max-width: 900px;
+        margin: 20px auto;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        color: #333;
+      }
+
+      .wizard-header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #e0e0e0;
+      }
+
+      .wizard-header h2 {
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+
+      .progress-container {
+        margin-bottom: 30px;
+      }
+
+      .progress-steps {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        position: relative;
+      }
+
+      .progress-steps::before {
+        content: '';
+        position: absolute;
+        top: 20px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: #e0e0e0;
+        z-index: 1;
+      }
+
+      .progress-bar-line {
+        position: absolute;
+        top: 20px;
+        left: 0;
+        height: 3px;
+        background: #007bff;
+        transition: width 0.3s ease;
+        z-index: 2;
+      }
+
+      .step-indicator {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+      }
+
+      .step-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #e0e0e0;
+        color: #999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+        border: 3px solid #e0e0e0;
+      }
+
+      .step-indicator.active .step-circle {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+      }
+
+      .step-indicator.completed .step-circle {
+        background: #28a745;
+        color: white;
+        border-color: #28a745;
+      }
+
+      .step-label {
+        font-size: 12px;
+        color: #666;
+        text-align: center;
+        font-weight: 500;
+      }
+
+      .step-indicator.active .step-label {
+        color: #007bff;
+        font-weight: bold;
+      }
+
+      .step-indicator.completed .step-label {
+        color: #28a745;
+      }
+
+      .wizard-step {
+        display: none;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .wizard-step.active {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .step-title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #007bff;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 8px;
+      }
+
+      .form-control, .form-select {
+        border-radius: 8px;
+        border: 2px solid #e0e0e0;
+        padding: 10px 15px;
+        transition: all 0.3s ease;
+      }
+
+      .form-control:focus, .form-select:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      }
+
+      .wizard-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 2px solid #e0e0e0;
+      }
+
+      .btn-wizard {
+        padding: 12px 30px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .btn-wizard:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .step-summary {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        margin-top: 20px;
+        border-left: 4px solid #007bff;
+      }
+
+      .step-summary h5 {
+        color: #007bff;
+        margin-bottom: 10px;
 }
 
       .bd-placeholder-img {
@@ -107,7 +297,6 @@
       }
     </style>
 
-    <!-- Custom styles for this template -->
     <link href="../css/sidebars.css" rel="stylesheet" />
     <link rel="stylesheet" href="../css/myStyle.css" />
   </head>
@@ -295,207 +484,104 @@
           <div
             class="container-fluid justify-content-center justify-content-md-between"
           >
-
           <img src="/img/Zlhospital-removebg-preview_processed.png" alt="Example Image" width="90" height="90" />
-
-            <a class="navbar-brand fw-medium fs-3 mb-1 mb-md-0"
-              >Zliten Medical Center</a
-            >
+            <a class="navbar-brand fw-medium fs-3 mb-1 mb-md-0">Zliten Medical Center</a>
             <img src="/img/Zlhospital-removebg-preview_processed.png" alt="Example Image" width="90" height="90" />
-
-            
+          </div>
         </nav>
 
-        <form action="/user/add/html" method="post" class="mx-0 row gx-3 gy-4 mt-3">
-          <div class="col-md-6">
-            <label for="inputfirstName4" class="form-label">First Name:</label>
-            <input
-            name="FirstName"
-              placeholder="Ali..."
-              type="text"
-              class="form-control"
-              id="inputfirstName4"
-            />
-          </div>
-          <div class="col-md-6">
-            <label for="inputlastName4" class="form-label">Last Name:</label>
-            <input name="lastName"
-              placeholder="Hassan..."
-              type="text"
-              class="form-control"
-              id="inputlastName4"
-            />
+        <div class="wizard-container">
+          <div class="wizard-header">
+            <h2><i class="bi bi-person-plus"></i> Add New Patient</h2>
+            <p class="text-muted">Please fill in all the required information step by step</p>
           </div>
 
-          <div class="col-md-6">
-            <label for="inputtele4" class="form-label">Telephone:</label>
-            <input name="mobileNumber"
-              placeholder="011987899"
-              type="number"
-              class="form-control"
-              id="inputtele4"
-            />
+          <!-- Progress Steps -->
+          <div class="progress-container">
+            <div class="progress-steps">
+              <div class="progress-bar-line" id="progressBar"></div>
+              <div class="step-indicator active" data-step="1">
+                <div class="step-circle">1</div>
+                <div class="step-label">Patient Info</div>
+              </div>
+              <div class="step-indicator" data-step="2">
+                <div class="step-circle">2</div>
+                <div class="step-label">Operation Info</div>
           </div>
-
-          <div class="col-md-6">
-            <label for="inputAdmissionDate" class="form-label"> admission date :</label>
-            <div class="input-group">
-              <input type="date" name="AdmissionDate" id="inputAdmissionDate" class="form-control">
+              <div class="step-indicator" data-step="3">
+                <div class="step-circle">3</div>
+                <div class="step-label">Medical Staff</div>
               </div>
           </div>
-          
-
-          <div class="col-md-6">
-            <label for="inputsurgeon" class="form-label">surgeon name:</label>
-            <input name="surgeon"
-              placeholder="surgeon"
-              type="surgeon"
-              class="form-control"
-              id="inputsurgeon"
-            />
-          </div>
-          <div class="col-md-6">
-            <label for="inputsurgeonAssistent1" class="form-label">surgeon assistent 1:</label>
-            <input name="surgeonAssistent1"
-              placeholder="surgeon Assistent 1"
-              type="surgeon Assistent 1"
-              class="form-control"
-              id="inputsurgeonAssistent1"
-            />
           </div>
 
-          <div class="col-md-6">
-            <label for="inputsurgeonAssistent2" class="form-label">surgeon assistent 2:</label>
-            <input name="surgeonAssistent2"
-              placeholder="surgeon Assistent 2"
-              type="surgeonAssistent2"
-              class="form-control"
-              id="inputsurgeonAssistent2"
-            />
-          </div>
+          <form action="/user/add/html" method="post" id="patientForm">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
+            <!-- Step 1: Patient Information -->
+            <div class="wizard-step active" id="step1">
+              <h3 class="step-title"><i class="bi bi-person"></i> Patient Information</h3>
+              <div class="row g-3">
           <div class="col-md-6">
-            <label for="inputsurgeonAssistent3" class="form-label">surgeon assistent 3:</label>
-            <input name="surgeonAssistent3"
-              placeholder="surgeon Assistent 3"
-              type="surgeonAssistent3"
-              class="form-control"
-              id="inputsurgeonAssistent3"
-            />
-          </div>
-
-          <div class="col-md-6">
-            <label for="inputtypeOfAnasthesia" class="form-label">Type of anasthesia:</label>
-            <input name="TypeOfAnasthesia" 
-              placeholder="Type Of Anasthesia"
-              type="typeOfAnasthesia"
-              class="form-control"
-              id="inputtypeOfAnasthesia"
-            />
-          </div>
-
-
-          
-          <div class="col-md-6">
-            <label for="inputtypeOfAnasthesia1" class="form-label">Anasthesiologist 1:</label>
-            <input name="Anasthesiologist1"
-              placeholder="Anasthesiologist1"
-              type="Anasthesiologist1"
-              class="form-control"
-              id="inputAnasthesiologist1"
-            />
-          </div>
-
-          
-          <div class="col-md-6">
-            <label for="inputAnasthesiologist2" class="form-label">Anasthesiologist 2:</label>
-            <input name="Anasthesiologist2"
-              placeholder="Anasthesiologist2"
-              type="Anasthesiologist2"
-              class="form-control"
-              id="inputAnasthesiologist2"
-            />
-          </div>
-          
-          <div class="col-md-6">
-            <label for="inputAnasthesiaTechnia" class="form-label">Anasthesia Technia:</label>
-            <input name="AnasthesiaTechnia" 
-              placeholder="AnasthesiaTechnia"
-              type="AnasthesiaTechnia"
-              class="form-control"
-              id="inputAnasthesiaTechnia"
-            />
-          </div>
-
-          
-          <div class="col-md-6">
-            <label for="inputScrub1" class="form-label">Scrub 1:</label>
-            <input name="Scrub1"
-              placeholder="Scrub 1"
-              type="Scrub1"
-              class="form-control"
-              id="inputScrub1"
-            />
-          </div>
-
-          
-          <div class="col-md-6">
-            <label for="inputScrub2" class="form-label">Scrub 2:</label>
-            <input name="Scrub2"
-              placeholder="Scrub 2"
-              type="Scrub2"
-              class="form-control"
-              id="inputScrub2"
-            />
-          </div>
-
-          <div class="col-md-6">
-            <label for="inputaddress" class="form-label">address:</label>
-            <input name="address"
-              placeholder="address"
-              type="address"
-              class="form-control"
-              id="inputaddress"
-            /> 
+                  <label for="inputfirstName4" class="form-label">First Name <span class="text-danger">*</span></label>
+                  <input name="FirstName" placeholder="Ali..." type="text" class="form-control" id="inputfirstName4" required />
           </div>
           <div class="col-md-6">
-            <label for="inputTypeofOperation" class="form-label">Type of Operation:</label>
-            <input name="TypeofOperation" 
-              placeholder="Type of Operation"
-              type="TypeofOperation"
-              class="form-control"
-              id="inputTypeofOperation"
-            />  
-          </div>
-          
-
-          <div>
-            <div class="col-md-6">
-              <label for="inputage4" class="form-label">Age:</label>
-              <input name="age"
-                placeholder="Your Age: ..."
-                type="number"
-                class="form-control"
-                id="inputage4"
-              />
-            </div>
-
-            <div>
-              <div class="col-md-6">
-                <label for="inputage4" class="form-label">file NU:</label>
-                <input name="fileNU"
-                  placeholder="file number: ..."
-                  type="number"
-                  class="form-control"
-                  id="inputage4"
-                />
-              </div>
-
+                  <label for="inputlastName4" class="form-label">Last Name <span class="text-danger">*</span></label>
+                  <input name="lastName" placeholder="Hassan..." type="text" class="form-control" id="inputlastName4" required />
           </div>
           <div class="col-md-6">
-            <label for="inputbloodType" class="form-label">blood Type:</label>
-            <select class="form-select" id="inputbloodType" name="bloodType" required>
-              <option value="" disabled selected>select bloodType </option>
+                  <label for="inputtele4" class="form-label">Telephone</label>
+                  <input name="mobileNumber" placeholder="011987899" type="number" class="form-control" id="inputtele4" />
+          </div>
+          <div class="col-md-6">
+                  <label for="inputage4" class="form-label">Age</label>
+                  <input name="age" placeholder="Your Age: ..." type="number" class="form-control" id="inputage4" />
+          </div>
+          <div class="col-md-6">
+                  <label for="inputGender" class="form-label">Gender</label>
+                  <select name="gender" id="inputGender" class="form-select">
+                    <option selected hidden disabled>Choose here ...</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                  </select>
+          </div>
+          <div class="col-md-6">
+                  <label for="inputCountry" class="form-label">Country</label>
+                  <select name="country" id="inputCountry" class="form-select">
+                    <option selected hidden disabled>Choose here ...</option>
+                    <option>Morocco</option>
+                    <option>Egypt</option>
+                    <option>Algeria</option>
+                    <option>Bahrain</option>
+                    <option>Comoros</option>
+                    <option>Djibouti</option>
+                    <option>Iraq</option>
+                    <option>Jordan</option>
+                    <option>Kuwait</option>
+                    <option>Lebanon</option>
+                    <option>Libya</option>
+                    <option>Mauritania</option>
+                    <option>Oman</option>
+                    <option>Palestine</option>
+                    <option>Qatar</option>
+                    <option>Saudi Arabia</option>
+                    <option>Somalia</option>
+                    <option>Sudan</option>
+                    <option>Syria</option>
+                    <option>Tunisia</option>
+                    <option>United Arab Emirates</option>
+                    <option>Yemen</option>
+                  </select>
+          </div>
+          <div class="col-md-6">
+                  <label for="inputaddress" class="form-label">Address</label>
+                  <input name="address" placeholder="address" type="text" class="form-control" id="inputaddress" />
+          </div>
+          <div class="col-md-6">
+                  <label for="inputbloodType" class="form-label">Blood Type</label>
+                  <select class="form-select" id="inputbloodType" name="bloodType">
+                    <option value="" disabled selected>Select blood type</option>
               <option value="A+">A+</option>
               <option value="A-">A-</option>
               <option value="B+">B+</option>
@@ -505,10 +591,28 @@
               <option value="O+">O+</option>
               <option value="O-">O-</option>
             </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="inputfileNU" class="form-label">File Number</label>
+                  <input name="fileNU" placeholder="file number: ..." type="number" class="form-control" id="inputfileNU" />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputAdmissionDate" class="form-label">Admission Date</label>
+                  <input type="date" name="AdmissionDate" id="inputAdmissionDate" class="form-control" />
+                </div>
+              </div>
+              <div class="wizard-buttons">
+                <div></div>
+                <button type="button" class="btn btn-primary btn-wizard" onclick="nextStep()">Next <i class="bi bi-arrow-right"></i></button>
+              </div>
           </div>
 
+            <!-- Step 2: Operation Information -->
+            <div class="wizard-step" id="step2">
+              <h3 class="step-title"><i class="bi bi-hospital"></i> Operation Information</h3>
+              <div class="row g-3">
           <div class="col-md-6">
-            <label for="inputDepartment" class="form-label">Department:</label>
+                  <label for="inputDepartment" class="form-label">Department <span class="text-danger">*</span></label>
             <select class="form-select" id="inputDepartment" name="Department" required>
                 <option value="" disabled selected>Select Department</option>
                 <option value="General Surgery">General Surgery</option>
@@ -523,74 +627,162 @@
                 <option value="Cardiology">Cardiology (Cardiac Catheterization)</option>
             </select>
         </div>
-        
-
-          <div>
             <div class="col-md-6">
-              <label for="inputCountry" class="form-label">Country:</label>
-              <select name="country" id="inputCountry" class="form-select">
-                <option selected hidden disabled>Choose here ...</option>
-
-                <option>Morocco</option>
-                <option>Egypt</option>
-                <option >Algeria</option>
-<option >Bahrain</option>
-<option >Comoros</option>
-<option >Djibouti</option>
-<option >Egypt</option>
-<option >Iraq</option>
-<option >Jordan</option>
-<option >Kuwait</option>
-<option >Lebanon</option>
-<option >Libya</option>
-<option >Mauritania</option>
-<option >Morocco</option>
-<option >Oman</option>
-<option >Palestine</option>
-<option >Qatar</option>
-<option >Saudi Arabia</option>
-<option >Somalia</option>
-<option >Sudan</option>
-<option >Syria</option>
-<option >Tunisia</option>
-<option >United Arab Emirates</option>
-<option >Yemen</option>
-              </select>
+                  <label for="inputTypeofOperation" class="form-label">Type of Operation</label>
+                  <input name="TypeofOperation" placeholder="Type of Operation" type="text" class="form-control" id="inputTypeofOperation" />
+                </div>
+                <div class="col-12">
+                  <label for="diagnosis" class="form-label">Diagnosis</label>
+                  <textarea class="form-control" id="diagnosis" name="diagnosis" rows="4" placeholder="Enter diagnosis details..."></textarea>
+                </div>
+                <div class="col-12">
+                  <label for="notes" class="form-label">Notes</label>
+                  <textarea class="form-control" id="notes" name="notes" rows="4" placeholder="Enter any additional notes..."></textarea>
             </div>
           </div>
-
-          <div>
-            <div class="col-md-6">
-              <label for="inputGender" class="form-label">Gender:</label>
-              <select name="gender" id="inputGender" class="form-select">
-                <option selected hidden disabled>Choose here ...</option>
-                <option>Male</option>
-                <option>Female</option>
-              </select>
+              <div class="wizard-buttons">
+                <button type="button" class="btn btn-secondary btn-wizard" onclick="prevStep()"><i class="bi bi-arrow-left"></i> Previous</button>
+                <button type="button" class="btn btn-primary btn-wizard" onclick="nextStep()">Next <i class="bi bi-arrow-right"></i></button>
             </div>
-
-
-            <div class="mb-3">
-              <label for="diagnosis" class="form-label">diagnosis</label>
-              <textarea class="form-control" id="diagnosis" name="diagnosis" rows="3" placeholder="diagnosis"></textarea>
             </div>
             
-
-            <div class="mb-3">
-              <label for="notes" class="form-label">notes</label>
-              <textarea class="form-control" id="notes" name="notes" rows="3" placeholder="notes"></textarea>
+            <!-- Step 3: Medical Staff -->
+            <div class="wizard-step" id="step3">
+              <h3 class="step-title"><i class="bi bi-people"></i> Medical Staff</h3>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="inputsurgeon" class="form-label">Surgeon Name</label>
+                  <input name="surgeon" placeholder="surgeon" type="text" class="form-control" id="inputsurgeon" />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputsurgeonAssistent1" class="form-label">Surgeon Assistant 1</label>
+                  <input name="surgeonAssistent1" placeholder="surgeon Assistant 1" type="text" class="form-control" id="inputsurgeonAssistent1" />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputsurgeonAssistent2" class="form-label">Surgeon Assistant 2</label>
+                  <input name="surgeonAssistent2" placeholder="surgeon Assistant 2" type="text" class="form-control" id="inputsurgeonAssistent2" />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputsurgeonAssistent3" class="form-label">Surgeon Assistant 3</label>
+                  <input name="surgeonAssistent3" placeholder="surgeon Assistant 3" type="text" class="form-control" id="inputsurgeonAssistent3" />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputtypeOfAnasthesia" class="form-label">Type of Anesthesia</label>
+                  <input name="TypeOfAnasthesia" placeholder="Type Of Anesthesia" type="text" class="form-control" id="inputtypeOfAnasthesia" />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputAnasthesiologist1" class="form-label">Anesthesiologist 1</label>
+                  <input name="Anasthesiologist1" placeholder="Anesthesiologist 1" type="text" class="form-control" id="inputAnasthesiologist1" />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputAnasthesiologist2" class="form-label">Anesthesiologist 2</label>
+                  <input name="Anasthesiologist2" placeholder="Anesthesiologist 2" type="text" class="form-control" id="inputAnasthesiologist2" />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputAnasthesiaTechnia" class="form-label">Anesthesia Technician</label>
+                  <input name="AnasthesiaTechnia" placeholder="Anesthesia Technician" type="text" class="form-control" id="inputAnasthesiaTechnia" />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputScrub1" class="form-label">Scrub 1</label>
+                  <input name="Scrub1" placeholder="Scrub 1" type="text" class="form-control" id="inputScrub1" />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputScrub2" class="form-label">Scrub 2</label>
+                  <input name="Scrub2" placeholder="Scrub 2" type="text" class="form-control" id="inputScrub2" />
+                </div>
+              </div>
+              <div class="wizard-buttons">
+                <button type="button" class="btn btn-secondary btn-wizard" onclick="prevStep()"><i class="bi bi-arrow-left"></i> Previous</button>
+                <button type="submit" class="btn btn-success btn-wizard"><i class="bi bi-check-circle"></i> Submit Patient</button>
+              </div>
             </div>
-
-          <div class="col-12">
-            <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
           </div>
-
-
-        </form>
       </section>
     </main>
     <script src="../js/bootstrap.bundle.min.js"></script>
     <script src="../js/sidebars.js"></script>
     <script src="../js/main.js"></script>
+    <script>
+      let currentStep = 1;
+      const totalSteps = 3;
+
+      function updateProgress() {
+        // Update progress bar
+        const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+        document.getElementById('progressBar').style.width = progress + '%';
+
+        // Update step indicators
+        document.querySelectorAll('.step-indicator').forEach((indicator, index) => {
+          const stepNum = index + 1;
+          indicator.classList.remove('active', 'completed');
+          if (stepNum < currentStep) {
+            indicator.classList.add('completed');
+            indicator.querySelector('.step-circle').innerHTML = '<i class="bi bi-check"></i>';
+          } else if (stepNum === currentStep) {
+            indicator.classList.add('active');
+            indicator.querySelector('.step-circle').innerHTML = stepNum;
+          } else {
+            indicator.querySelector('.step-circle').innerHTML = stepNum;
+          }
+        });
+      }
+
+      function showStep(step) {
+        // Hide all steps
+        document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active'));
+        
+        // Show current step
+        document.getElementById('step' + step).classList.add('active');
+        
+        currentStep = step;
+        updateProgress();
+      }
+
+      function nextStep() {
+        // Validate current step
+        const currentStepElement = document.getElementById('step' + currentStep);
+        const requiredFields = currentStepElement.querySelectorAll('[required]');
+        let isValid = true;
+
+        requiredFields.forEach(field => {
+          if (!field.value.trim()) {
+            isValid = false;
+            field.classList.add('is-invalid');
+          } else {
+            field.classList.remove('is-invalid');
+          }
+        });
+
+        if (!isValid) {
+          alert('Please fill in all required fields before proceeding.');
+          return;
+        }
+
+        if (currentStep < totalSteps) {
+          showStep(currentStep + 1);
+        }
+      }
+
+      function prevStep() {
+        if (currentStep > 1) {
+          showStep(currentStep - 1);
+        }
+      }
+
+      // Initialize
+      updateProgress();
+
+      // Allow clicking on step indicators to navigate (optional)
+      document.querySelectorAll('.step-indicator').forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+          const targetStep = index + 1;
+          if (targetStep <= currentStep) {
+            showStep(targetStep);
+          }
+        });
+        indicator.style.cursor = 'pointer';
+      });
+    </script>
   </body>
 </html>

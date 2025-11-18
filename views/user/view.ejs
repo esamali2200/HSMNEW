@@ -16,25 +16,143 @@
       content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
     />
     <meta name="generator" content="Hugo 0.112.5" />
-    <title>Edit page</title>
+    <title>Patient Details</title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet" />
 
     <style>
+      body {
+        background-image: url('/img/Zlhospital-removebg-preview_processed.png');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        margin: 10;
+        font-family: Arial, sans-serif;
+        color: white;
+      }
 
-table {
-    opacity: 0.8; /* 0.8 تعني شفافية 80% */
-}
+      .cards-container {
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 0 15px;
+      }
 
-     body {
-    background-image: url('/img/Zlhospital-removebg-preview_processed.png'); /* مسار الصورة الخلفية */
-    background-size: contain; /* لتصغير الصورة بحيث تبين كاملة داخل الخلفية */
-    background-position: center; /* محاذاة الصورة في المنتصف */
-    background-repeat: no-repeat; /* عدم تكرار الصورة */
-    background-attachment: fixed; /* لتثبيت الخلفية أثناء التمرير */
-    margin: 10;
-    font-family: Arial, sans-serif; /* تحديد نوع الخط */
-    color: white; /* تحديد لون النص */
+      .info-card {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 25px;
+        margin-bottom: 25px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        color: #333;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .info-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      }
+
+      .card-header-custom {
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
+        border-bottom: 3px solid;
+      }
+
+      .card-header-custom i {
+        font-size: 28px;
+        margin-right: 12px;
+      }
+
+      .card-header-custom h4 {
+        margin: 0;
+        font-weight: bold;
+        color: #2c3e50;
+      }
+
+      .card-primary .card-header-custom {
+        border-color: #007bff;
+        color: #007bff;
+      }
+
+      .card-success .card-header-custom {
+        border-color: #28a745;
+        color: #28a745;
+      }
+
+      .card-info .card-header-custom {
+        border-color: #17a2b8;
+        color: #17a2b8;
+      }
+
+      .card-warning .card-header-custom {
+        border-color: #ffc107;
+        color: #ffc107;
+      }
+
+      .info-row {
+        display: flex;
+        padding: 12px 0;
+        border-bottom: 1px solid #e9ecef;
+      }
+
+      .info-row:last-child {
+        border-bottom: none;
+      }
+
+      .info-label {
+        font-weight: 600;
+        color: #495057;
+        min-width: 180px;
+        flex-shrink: 0;
+      }
+
+      .info-value {
+        color: #212529;
+        flex: 1;
+      }
+
+      .info-value:empty::before {
+        content: "—";
+        color: #999;
+        font-style: italic;
+      }
+
+      .breadcrumb-info {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 10px;
+        padding: 15px 20px;
+        margin: 20px auto;
+        max-width: 1200px;
+        color: #333;
+      }
+
+      .action-buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 20px;
+        flex-wrap: wrap;
+      }
+
+      .btn-action {
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .btn-action:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .badge-custom {
+        padding: 6px 12px;
+        border-radius: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
 }
 
       .bd-placeholder-img {
@@ -111,7 +229,6 @@ table {
       }
     </style>
 
-    <!-- Custom styles for this template -->
     <link href="../css/sidebars.css" rel="stylesheet" />
     <link rel="stylesheet" href="../css/myStyle.css" />
   </head>
@@ -248,7 +365,7 @@ table {
         <hr />
         <ul class="nav nav-pills flex-column mb-auto">
           <li class="nav-item">
-            <a href="/H" class="nav-link  text-white" aria-current="page">
+            <a href="/H" class="nav-link text-white" aria-current="page">
               <svg class="bi pe-none me-2" width="16" height="16">
                 <use xlink:href="#home" />
               </svg>
@@ -287,7 +404,7 @@ table {
             <li><a class="dropdown-item" href="#">Settings</a></li>
             <li><a class="dropdown-item" href="#">Profile</a></li>
             <li><hr class="dropdown-divider" /></li>
-            <li><a class="dropdown-item" href="#">Sign out</a></li>
+            <li><a class="dropdown-item" href="/">Sign out</a></li>
           </ul>
         </div>
       </div>
@@ -299,187 +416,244 @@ table {
           <div
             class="container-fluid justify-content-center justify-content-md-between"
           >
-
           <img src="/img/Zlhospital-removebg-preview_processed.png" alt="Example Image" width="90" height="90" />
-
-            <a class="navbar-brand fw-medium fs-3 mb-1 mb-md-0"
-              >Zliten Medical Center</a
-            >
-
+            <a class="navbar-brand fw-medium fs-3 mb-1 mb-md-0">Zliten Medical Center</a>
             <img src="/img/Zlhospital-removebg-preview_processed.png" alt="Example Image" width="90" height="90" />
-
-
+          </div>
         </nav>
 
-        <nav
-          style="width: 88%"
-          class="px-2 mt-4 d-flex flex-wrap justify-content-between"
-          aria-label="breadcrumb"
-        >
-          <ol class="breadcrumb">
+        <div class="breadcrumb-info">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-2">
             <li class="breadcrumb-item"><a href="/H">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">
               <%= obj.FirstName %> <%= obj.lastName %>
             </li>
           </ol>
-
-          <p class=" ">
-            <span class="fw-medium fs-6">Id :</span> 6487021520bcf1af6319484c
-          <%= obj._id %>
-          </p>
         </nav>
+          <p class="mb-0"><span class="fw-medium">Patient ID:</span> <%= obj._id %></p>
+        </div>
 
-        <table
-  style="width: 88%"
-  class="ms-1 table mt-5 table-striped table-bordered"
->
-  <thead>
-    <tr>
-      <th scope="col">First Name</th>
-      <th class="fw-normal" scope="col"><%= obj.FirstName %></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th scope="row">Last Name</th>
-      <td><%= obj.lastName %></td>
-    </tr>
+        <div class="cards-container">
+          <!-- Card 1: Patient Basic Information -->
+          <div class="info-card card-primary">
+            <div class="card-header-custom">
+              <i class="bi bi-person-circle"></i>
+              <h4>Patient Information</h4>
+            </div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-person"></i> Full Name:</span>
+                  <span class="info-value"><%= obj.FirstName %> <%= obj.lastName %></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-telephone"></i> Telephone:</span>
+                  <span class="info-value"><%= obj.mobileNumber || '—' %></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-calendar"></i> Age:</span>
+                  <span class="info-value"><%= obj.age || '—' %></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-gender-ambiguous"></i> Gender:</span>
+                  <span class="info-value"><%= obj.gender || '—' %></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-geo-alt"></i> Country:</span>
+                  <span class="info-value"><%= obj.country || '—' %></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-house"></i> Address:</span>
+                  <span class="info-value"><%= obj.address || '—' %></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-heart-pulse"></i> Blood Type:</span>
+                  <span class="info-value">
+                    <% if (obj.bloodType || obj.blood_type) { %>
+                      <span class="badge bg-danger badge-custom"><%= obj.bloodType || obj.blood_type %></span>
+                    <% } else { %>
+                      —
+                    <% } %>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-file-earmark"></i> File Number:</span>
+                  <span class="info-value"><%= obj.fileNU || '—' %></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-calendar-event"></i> Admission Date:</span>
+                  <span class="info-value">
+                    <% if (obj.AdmissionDate) { %>
+                      <%= moment(obj.AdmissionDate).format('YYYY/MM/DD') %>
+                    <% } else { %>
+                      —
+                    <% } %>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
 
-    <tr>
-      <th scope="row">Telephone</th>
-      <td><%= obj.mobileNumber %></td>
-    </tr>
+          <!-- Card 2: Operation Information -->
+          <div class="info-card card-success">
+            <div class="card-header-custom">
+              <i class="bi bi-hospital"></i>
+              <h4>Operation Information</h4>
+            </div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-building"></i> Department:</span>
+                  <span class="info-value">
+                    <% if (obj.Department || obj.department) { %>
+                      <span class="badge bg-primary badge-custom"><%= obj.Department || obj.department %></span>
+                    <% } else { %>
+                      —
+                    <% } %>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-scissors"></i> Type of Operation:</span>
+                  <span class="info-value"><%= obj.TypeofOperation || '—' %></span>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-clipboard-pulse"></i> Diagnosis:</span>
+                  <span class="info-value"><%= obj.diagnosis || '—' %></span>
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-sticky"></i> Notes:</span>
+                  <span class="info-value"><%= obj.notes || '—' %></span>
+                </div>
+              </div>
+            </div>
+          </div>
 
-    <tr>
-      <th scope="row">file number</th>
-      <td><%= obj.fileNU %></td>
-    </tr>
+          <!-- Card 3: Medical Staff -->
+          <div class="info-card card-info">
+            <div class="card-header-custom">
+              <i class="bi bi-people"></i>
+              <h4>Medical Staff</h4>
+            </div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-person-badge"></i> Surgeon:</span>
+                  <span class="info-value"><%= obj.surgeon || '—' %></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-person-check"></i> Surgeon Assistant 1:</span>
+                  <span class="info-value"><%= obj.surgeonAssistent1 || '—' %></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-person-check"></i> Surgeon Assistant 2:</span>
+                  <span class="info-value"><%= obj.surgeonAssistent2 || '—' %></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-person-check"></i> Surgeon Assistant 3:</span>
+                  <span class="info-value"><%= obj.surgeonAssistent3 || '—' %></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-lungs"></i> Type of Anesthesia:</span>
+                  <span class="info-value"><%= obj.TypeOfAnasthesia || '—' %></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-person-heart"></i> Anesthesiologist 1:</span>
+                  <span class="info-value"><%= obj.Anasthesiologist1 || '—' %></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-person-heart"></i> Anesthesiologist 2:</span>
+                  <span class="info-value"><%= obj.Anasthesiologist2 || '—' %></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-tools"></i> Anesthesia Technician:</span>
+                  <span class="info-value"><%= obj.AnasthesiaTechnia || '—' %></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-shield-check"></i> Scrub 1:</span>
+                  <span class="info-value"><%= obj.Scrub1 || '—' %></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-shield-check"></i> Scrub 2:</span>
+                  <span class="info-value"><%= obj.Scrub2 || '—' %></span>
+                </div>
+              </div>
+            </div>
+          </div>
 
-
-
-
-    <tr>
-      <th scope="row">Admission Date</th>
-      <td> <%= moment(obj.AdmissionDate).format('YYYY/DD/MM') %></td>
-    </tr>
-  
-     
-    <tr>
-      <th scope="row">surgeon</th>
-      <td><%= obj.surgeon %></td>
-    </tr>
-
-    <tr>
-      <th scope="row">surgeon Assistent 1</th>
-      <td><%= obj.surgeonAssistent1 %></td>
-    </tr>
-
-    <tr>
-      <th scope="row">surgeon Assistent 2</th>
-      <td><%= obj.surgeonAssistent2 %></td>
-    </tr>
-
-    <tr>
-      <th scope="row">surgeon Assistent 3</th>
-      <td><%= obj.surgeonAssistent3 %></td>
-    </tr>
-
-
-    <tr>
-      <th scope="row">Anasthesiologist 1</th>
-      <td><%= obj.Anasthesiologist1 %></td>
-    </tr>
-    
-    <tr>
-      <th scope="row">Anasthesiologist 2</th>
-      <td><%= obj.Anasthesiologist2 %></td>
-    </tr>
-
-    <tr>
-      <th scope="row">Type Of Anasthesia</th>
-      <td><%= obj.TypeOfAnasthesia %></td>
-    </tr>
-
-    <tr>
-      <th scope="row">Scrub 1</th>
-      <td><%= obj.Scrub1 %></td>
-    </tr>
-
-    <tr>
-      <th scope="row">Scrub 2</th>
-      <td><%= obj.Scrub2 %></td>
-    </tr>
-
-    <tr>
-      <th scope="row">Anasthesia Technia </th>
-      <td><%= obj.AnasthesiaTechnia %></td>
-    </tr>
-
-
-    
-
-    <tr>
-      <th scope="row">address</th>
-      <td><%= obj.address %></td>
-    </tr>
- 
-    <tr>
-      <th scope="row">Type of Operation</th>
-      <td><%= obj.TypeofOperation %></td>
-    </tr>
-
-    <tr>
-      <th scope="row">Gender</th>
-      <td><%= obj.gender %></td>
-    </tr>
-
-    <tr>
-      <th scope="row">Age</th>
-      <td><%= obj.age %></td>
-    </tr>
-
-    <tr>
-      <th scope="row">Country</th>
-      <td><%= obj.country %></td>
-    </tr>
-
-    <tr>
-      <th scope="row">Blood Type</th>
-      <td><%= obj.bloodType %></td>
-    </tr>
-
-    <tr>
-      <th scope="row">Department</th>
-      <td><%= obj.Department %></td>
-    </tr>
-
-    <tr>
-      <th scope="row">diagnosis</th>
-      <td><%= obj.diagnosis %></td>
-    </tr>
-
-    <tr>
-      <th scope="row">notes</th>
-      <td><%= obj.notes %></td>
-    </tr>
-    
-
-    <tr>
-      <th scope="row">Created on</th>
-      <td><%= moment(obj.createdAt).fromNow(); %></td>
-    </tr>
-
-    <tr>
-      <th scope="row">Last Update</th>
-      <td><%= moment(obj.updatedAt).fromNow(); %></td>
-    </tr>
-  </tbody>
-</table>
-
+          <!-- Card 4: Additional Information -->
+          <div class="info-card card-warning">
+            <div class="card-header-custom">
+              <i class="bi bi-info-circle"></i>
+              <h4>Additional Information</h4>
+            </div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-clock-history"></i> Created:</span>
+                  <span class="info-value"><%= moment(obj.createdAt).fromNow() %></span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-row">
+                  <span class="info-label"><i class="bi bi-pencil"></i> Last Updated:</span>
+                  <span class="info-value"><%= moment(obj.updatedAt).fromNow() %></span>
+                </div>
+              </div>
+            </div>
+            <div class="action-buttons">
+              <a href="/edit/<%= obj._id %>" class="btn btn-primary btn-action">
+                <i class="bi bi-pencil-square"></i> Edit Patient
+              </a>
+              <a href="/H" class="btn btn-secondary btn-action">
+                <i class="bi bi-arrow-left"></i> Back to List
+              </a>
+            </div>
+          </div>
+        </div>
       </section>
     </main>
     <script src="../js/bootstrap.bundle.min.js"></script>
-
     <script src="../js/sidebars.js"></script>
     <script src="../js/main.js"></script>
   </body>

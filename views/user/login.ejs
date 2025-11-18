@@ -14,6 +14,12 @@
     <!-- Login Form -->
     <div class="login-container">
 
+        <% if (typeof error !== 'undefined') { %>
+            <div class="alert alert-danger">
+                <%= error %>
+            </div>
+        <% } %>
+
         <div class="image-container">
             <img src="/img/zlhospital-removebg-preview.png" alt="User Image" class="profile-image">
         </div>
@@ -21,6 +27,7 @@
 
         <h1>Zliten Medical Center</h1>
         <form action="/" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
             <div class="form-group">
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username" required>

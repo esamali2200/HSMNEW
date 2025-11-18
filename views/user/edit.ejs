@@ -16,22 +16,207 @@
       content="Mark Otto, Jacob Thornton, and Bootstrap contributors"
     />
     <meta name="generator" content="Hugo 0.112.5" />
-    <title>Edit page</title>
+    <title>Edit Patient - Multi Step Form</title>
 
     <link href="../css/bootstrap.min.css" rel="stylesheet" />
-    <style>
 
-   
-     
+    <style>
       body {
-     background-image: url('/img/Zlhospital-removebg-preview_processed.png'); /* مسار الصورة الخلفية */
-     background-size: contain; /* لتصغير الصورة بحيث تبين كاملة داخل الخلفية */
-     background-position: center; /* محاذاة الصورة في المنتصف */
-     background-repeat: no-repeat; /* عدم تكرار الصورة */
-     background-attachment: fixed; /* لتثبيت الخلفية أثناء التمرير */
+        background-image: url('/img/Zlhospital-removebg-preview_processed.png');
+        background-size: contain;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-attachment: fixed;
      margin: 10;
-     font-family: Arial, sans-serif; /* تحديد نوع الخط */
-     color: white; /* تحديد لون النص */
+        font-family: Arial, sans-serif;
+        color: white;
+      }
+
+      .wizard-container {
+        max-width: 900px;
+        margin: 20px auto;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        color: #333;
+      }
+
+      .wizard-header {
+        text-align: center;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid #e0e0e0;
+      }
+
+      .wizard-header h2 {
+        color: #2c3e50;
+        margin-bottom: 10px;
+      }
+
+      .progress-container {
+        margin-bottom: 30px;
+      }
+
+      .progress-steps {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        position: relative;
+      }
+
+      .progress-steps::before {
+        content: '';
+        position: absolute;
+        top: 20px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: #e0e0e0;
+        z-index: 1;
+      }
+
+      .progress-bar-line {
+        position: absolute;
+        top: 20px;
+        left: 0;
+        height: 3px;
+        background: #007bff;
+        transition: width 0.3s ease;
+        z-index: 2;
+      }
+
+      .step-indicator {
+        position: relative;
+        z-index: 3;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        flex: 1;
+      }
+
+      .step-circle {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #e0e0e0;
+        color: #999;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        margin-bottom: 10px;
+        transition: all 0.3s ease;
+        border: 3px solid #e0e0e0;
+      }
+
+      .step-indicator.active .step-circle {
+        background: #007bff;
+        color: white;
+        border-color: #007bff;
+      }
+
+      .step-indicator.completed .step-circle {
+        background: #28a745;
+        color: white;
+        border-color: #28a745;
+      }
+
+      .step-label {
+        font-size: 12px;
+        color: #666;
+        text-align: center;
+        font-weight: 500;
+      }
+
+      .step-indicator.active .step-label {
+        color: #007bff;
+        font-weight: bold;
+      }
+
+      .step-indicator.completed .step-label {
+        color: #28a745;
+      }
+
+      .wizard-step {
+        display: none;
+        animation: fadeIn 0.3s ease;
+      }
+
+      .wizard-step.active {
+        display: block;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .step-title {
+        font-size: 24px;
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #007bff;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-label {
+        font-weight: 600;
+        color: #495057;
+        margin-bottom: 8px;
+      }
+
+      .form-control, .form-select {
+        border-radius: 8px;
+        border: 2px solid #e0e0e0;
+        padding: 10px 15px;
+        transition: all 0.3s ease;
+      }
+
+      .form-control:focus, .form-select:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      }
+
+      .wizard-buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 2px solid #e0e0e0;
+      }
+
+      .btn-wizard {
+        padding: 12px 30px;
+        border-radius: 8px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .btn-wizard:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      .breadcrumb-info {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 10px;
+        padding: 15px 20px;
+        margin: 20px auto;
+        max-width: 900px;
+        color: #333;
  }
  
        .bd-placeholder-img {
@@ -106,26 +291,7 @@
        .bd-mode-toggle {
          z-index: 1500;
        }
- 
-       /* Align the form group (label + input) to the left */
- .col-md-6 {
-   display: flex;
-   flex-direction: column;
-   align-items: flex-start;  /* Align the label and input to the left */
-   width: 100%;  /* Make sure it uses the full width */
- }
- 
- .form-label {
-   margin-bottom: 5px; /* Space between label and input */
-   text-align: left; /* Ensure label is aligned left */
- }
- 
- .form-control {
-   width: 100%;  /* Make sure the input takes the full width of the column */
- }
-
  </style>
-
     
     <link href="../css/sidebars.css" rel="stylesheet" />
     <link rel="stylesheet" href="../css/myStyle.css" />
@@ -316,338 +482,242 @@
           >
           <img src="/img/Zlhospital-removebg-preview_processed.png" alt="Example Image" width="90" height="90" />
 
-            <a class="navbar-brand fw-medium fs-3 mb-1 mb-md-0"
-              >Zliten Medical Center</a
-            >
+            <a class="navbar-brand fw-medium fs-3 mb-1 mb-md-0">Zliten Medical Center</a>
 
             <img src="/img/Zlhospital-removebg-preview_processed.png" alt="Example Image" width="90" height="90" />
-
-          
-            
           </div>
         </nav>
 
-
-        <nav class="px-2 mt-4 d-flex flex-wrap justify-content-between" aria-label="breadcrumb">
-          <ol class="breadcrumb">
+        <div class="breadcrumb-info">
+          <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="/H">Home</a></li>
             <li class="breadcrumb-item active" aria-current="page">
-              <%= obj.FirstName %>  <%= obj.lastName %>
+                Editing: <%= obj.FirstName %> <%= obj.lastName %>
             </li>
           </ol>
-
-
-          <p class="me-md-5"> <span class="fw-medium fs-6">Id :</span> 
-          <%= obj._id %>
-          </p>
         </nav>
-
-        <form action="/edit/<%= obj._id %>?_method=PUT" method="POST" class="mx-0 row gx-3 gy-4 mt-2">
-          <div class="col-md-4">
-            <label for="inputfirstName4" class="form-label">First Name:</label>
-            <input
-            name="FirstName"
-            value="<%= obj.FirstName %>"
-              type="text"
-              class="form-control"
-              id="inputfirstName4"
-            />
-          </div>
-          <div class="col-md-4">
-            <label for="inputlastName4" class="form-label">Last Name:</label>
-            <input name="lastName"
-            value="<%= obj.lastName %>"
-              type="text"
-              class="form-control"
-              id="inputlastName4"
-            />
-          </div>
-    
-        
-          <div class="col-md-4">
-            <label for="inputtele4" class="form-label">Telephone:</label>
-            <input
-            name="mobileNumber"
-            value="<%= obj.mobileNumber %>"
-              type="number"
-              class="form-control"
-              id="inputtele4"
-            />
-          </div>
-
-          <div class="col-md-4">
-            <label for="inputtele4" class="form-label">file NU:</label>
-            <input
-            name="fileNU"
-            value="<%= obj.fileNU %>"
-              type="number"
-              class="form-control"
-              id="inputtele4"
-            />
-          </div>
-    
-          <div class="col-md-4">
-            <label for="inputAdmissionDate" class="form-label">Admission Date:</label>
-            <input
-                name="AdmissionDate"
-                value="<%= obj.AdmissionDate ? new Date(obj.AdmissionDate).toISOString().split('T')[0] : '' %>"
-                type="date"
-                class="form-control"
-                id="inputAdmissionDate"
-            />
+          <p class="mb-0 mt-2"><span class="fw-medium">Patient ID:</span> <%= obj._id %></p>
         </div>
         
-    
-    
-        <div class="col-md-4">
-            <label for="inputsurgeon" class="form-label">surgeon:</label>
-            <input
-            name="surgeon"
-            value="<%= obj.surgeon %>"
-              type="surgeon"
-              class="form-control"
-              id="inputsurgeon"
-            />
+        <div class="wizard-container">
+          <div class="wizard-header">
+            <h2><i class="bi bi-pencil-square"></i> Edit Patient Information</h2>
+            <p class="text-muted">Update patient information step by step</p>
           </div>
     
-          <div class="col-md-4">
-            <label for="inputsurgeonAssistent1" class="form-label">surgeonAssistent1:</label>
-            <input
-            name="surgeonAssistent1"
-            value="<%= obj.surgeonAssistent1 %>"
-              type="surgeonAssistent1"
-              class="form-control"
-              id="inputsurgeonAssistent1"
-            />
+          <!-- Progress Steps -->
+          <div class="progress-container">
+            <div class="progress-steps">
+              <div class="progress-bar-line" id="progressBar"></div>
+              <div class="step-indicator active" data-step="1">
+                <div class="step-circle">1</div>
+                <div class="step-label">Patient Info</div>
+          </div>
+              <div class="step-indicator" data-step="2">
+                <div class="step-circle">2</div>
+                <div class="step-label">Operation Info</div>
+          </div>
+              <div class="step-indicator" data-step="3">
+                <div class="step-circle">3</div>
+                <div class="step-label">Medical Staff</div>
+          </div>
+          </div>
           </div>
     
-          <div class="col-md-4">
-            <label for="inputsurgeonAssistent2" class="form-label">surgeonAssistent2:</label>
-            <input
-            name="surgeonAssistent2"
-            value="<%= obj.surgeonAssistent2 %>"
-              type="surgeonAssistent2"
-              class="form-control"
-              id="inputsurgeonAssistent2"
-            />
-          </div>
-    
-          <div class="col-md-4">
-            <label for="inputsurgeonAssistent3" class="form-label">surgeonAssistent3:</label>
-            <input
-            name="surgeonAssistent3"
-            value="<%= obj.surgeonAssistent3 %>"
-              type="surgeonAssistent3"
-              class="form-control"
-              id="inputsurgeonAssistent3"
-            />
-          </div>
-    
-          <div class="col-md-4">
-            <label for="inputAnasthesiologist1" class="form-label">Anasthesiologist 1:</label>
-            <input
-            name="Anasthesiologist1"
-            value="<%= obj.Anasthesiologist1 %>"
-              type="Anasthesiologist1"
-              class="form-control"
-              id="inputAnasthesiologist1"
-            />
-          </div>
-    
-          <div class="col-md-4">
-            <label for="inputAnasthesiologist" class="form-label">Anasthesiologist 2:</label>
-            <input
-            name="Anasthesiologist2"
-            value="<%= obj.Anasthesiologist2 %>"
-              type="Anasthesiologist2"
-              class="form-control"
-              id="inputAnasthesiologist2"
-            />
-          </div>
-    
-    
-          <div class="col-md-4">
-            <label for="inputtypeOfAnasthesia" class="form-label">Type of anasthesia:</label>
-            <input name="typeOfAnasthesia" 
-            value="<%= obj.TypeOfAnasthesia %>"
-              type="typeOfAnasthesia"
-              class="form-control"
-              id="inputtypeOfAnasthesia"
-            />
-          </div>
-    
-    
-    
-          <div class="col-md-4">
-            <label for="inputScrub1" class="form-label">Scrub 1:</label>
-            <input
-            name="Scrub1"
-            value="<%= obj.Scrub1 %>"
-              type="Scrub1"
-              class="form-control"
-              id="inputScrub1"
-            />
-          </div>
-    
-          <div class="col-md-4">
-            <label for="inputScrub2" class="form-label">Scrub 2:</label>
-            <input
-            name="Scrub2"
-            value="<%= obj.Scrub2 %>"
-              type="Scrub2"
-              class="form-control"
-              id="inputScrub2"
-            />
-          </div>
+          <form action="/edit/<%= obj._id %>?_method=PUT" method="POST" id="patientForm">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
 
-          <div class="col-md-4">
-            <label for="inputAnasthesiaTechnia" class="form-label">Anasthesia Technia:</label>
-            <input
-            name="AnasthesiaTechnia" 
-            value="<%= obj.AnasthesiaTechnia %>"
-              type="AnasthesiaTechnia"
-              class="form-control"
-              id="inputAnasthesiaTechnia"
-            />
+            <!-- Step 1: Patient Information -->
+            <div class="wizard-step active" id="step1">
+              <h3 class="step-title"><i class="bi bi-person"></i> Patient Information</h3>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="inputfirstName4" class="form-label">First Name <span class="text-danger">*</span></label>
+                  <input name="FirstName" value="<%= obj.FirstName %>" type="text" class="form-control" id="inputfirstName4" required />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputlastName4" class="form-label">Last Name <span class="text-danger">*</span></label>
+                  <input name="lastName" value="<%= obj.lastName %>" type="text" class="form-control" id="inputlastName4" required />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputtele4" class="form-label">Telephone</label>
+                  <input name="mobileNumber" value="<%= obj.mobileNumber %>" type="number" class="form-control" id="inputtele4" />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputage4" class="form-label">Age</label>
+                  <input name="age" value="<%= obj.age %>" type="number" class="form-control" id="inputage4" />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputGender" class="form-label">Gender</label>
+                  <select name="gender" id="inputGender" class="form-select">
+                    <option hidden disabled>Choose here ...</option>
+                    <option <%= obj.gender === "Male" ? "selected" : "" %>>Male</option>
+                    <option <%= obj.gender === "Female" ? "selected" : "" %>>Female</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="inputCountry" class="form-label">Country</label>
+                  <select name="country" id="inputCountry" class="form-select">
+                    <option hidden disabled>Choose here ...</option>
+                    <option <%= obj.country === "Morocco" ? "selected" : "" %>>Morocco</option>
+                    <option <%= obj.country === "Egypt" ? "selected" : "" %>>Egypt</option>
+                    <option <%= obj.country === "Algeria" ? "selected" : "" %>>Algeria</option>
+                    <option <%= obj.country === "Bahrain" ? "selected" : "" %>>Bahrain</option>
+                    <option <%= obj.country === "Comoros" ? "selected" : "" %>>Comoros</option>
+                    <option <%= obj.country === "Djibouti" ? "selected" : "" %>>Djibouti</option>
+                    <option <%= obj.country === "Iraq" ? "selected" : "" %>>Iraq</option>
+                    <option <%= obj.country === "Jordan" ? "selected" : "" %>>Jordan</option>
+                    <option <%= obj.country === "Kuwait" ? "selected" : "" %>>Kuwait</option>
+                    <option <%= obj.country === "Lebanon" ? "selected" : "" %>>Lebanon</option>
+                    <option <%= obj.country === "Libya" ? "selected" : "" %>>Libya</option>
+                    <option <%= obj.country === "Mauritania" ? "selected" : "" %>>Mauritania</option>
+                    <option <%= obj.country === "Oman" ? "selected" : "" %>>Oman</option>
+                    <option <%= obj.country === "Palestine" ? "selected" : "" %>>Palestine</option>
+                    <option <%= obj.country === "Qatar" ? "selected" : "" %>>Qatar</option>
+                    <option <%= obj.country === "Saudi Arabia" ? "selected" : "" %>>Saudi Arabia</option>
+                    <option <%= obj.country === "Somalia" ? "selected" : "" %>>Somalia</option>
+                    <option <%= obj.country === "Sudan" ? "selected" : "" %>>Sudan</option>
+                    <option <%= obj.country === "Syria" ? "selected" : "" %>>Syria</option>
+                    <option <%= obj.country === "Tunisia" ? "selected" : "" %>>Tunisia</option>
+                    <option <%= obj.country === "United Arab Emirates" ? "selected" : "" %>>United Arab Emirates</option>
+                    <option <%= obj.country === "Yemen" ? "selected" : "" %>>Yemen</option>
+                  </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="inputaddress" class="form-label">Address</label>
+                  <input name="address" value="<%= obj.address %>" type="text" class="form-control" id="inputaddress" />
           </div>
-    
-            <div class="col-md-4">
-              <label for="inputaddress" class="form-label">Address:</label>
-              <input
-                name="address"
-                value="<%= obj.address %>"
-                type="Address" 
-                class="form-control"
-                id="inputaddress"
-              />
+                <div class="col-md-6">
+                  <label for="inputbloodType" class="form-label">Blood Type</label>
+                  <select class="form-select" id="inputbloodType" name="bloodType">
+                    <option value="" disabled>Select blood type</option>
+                    <option value="A+" <%= (obj.bloodType === "A+" || obj.blood_type === "A+") ? "selected" : "" %>>A+</option>
+                    <option value="A-" <%= (obj.bloodType === "A-" || obj.blood_type === "A-") ? "selected" : "" %>>A-</option>
+                    <option value="B+" <%= (obj.bloodType === "B+" || obj.blood_type === "B+") ? "selected" : "" %>>B+</option>
+                    <option value="B-" <%= (obj.bloodType === "B-" || obj.blood_type === "B-") ? "selected" : "" %>>B-</option>
+                    <option value="AB+" <%= (obj.bloodType === "AB+" || obj.blood_type === "AB+") ? "selected" : "" %>>AB+</option>
+                    <option value="AB-" <%= (obj.bloodType === "AB-" || obj.blood_type === "AB-") ? "selected" : "" %>>AB-</option>
+                    <option value="O+" <%= (obj.bloodType === "O+" || obj.blood_type === "O+") ? "selected" : "" %>>O+</option>
+                    <option value="O-" <%= (obj.bloodType === "O-" || obj.blood_type === "O-") ? "selected" : "" %>>O-</option>
+                  </select>
+          </div>
+                <div class="col-md-6">
+                  <label for="inputfileNU" class="form-label">File Number</label>
+                  <input name="fileNU" value="<%= obj.fileNU %>" type="number" class="form-control" id="inputfileNU" />
+          </div>
+                <div class="col-md-6">
+                  <label for="inputAdmissionDate" class="form-label">Admission Date</label>
+                  <input type="date" name="AdmissionDate" id="inputAdmissionDate" class="form-control" value="<%= obj.AdmissionDate ? new Date(obj.AdmissionDate).toISOString().split('T')[0] : '' %>" />
+          </div>
             </div>
-            
-            <div class="col-md-4">
-            <label for="inputTypeofOperation" class="form-label">Type of Operation:</label>
-            <input
-            name="TypeofOperation"
-            value="<%= obj.TypeofOperation %>"
-              type="TypeofOperation"
-              class="form-control"
-              id="inputTypeofOperation"
-            />
+              <div class="wizard-buttons">
+                <div></div>
+                <button type="button" class="btn btn-primary btn-wizard" onclick="nextStep()">Next <i class="bi bi-arrow-right"></i></button>
           </div>
-    
-          
-            <div class="col-md-4">
-              <label for="inputage4" class="form-label">Age:</label>
-              <input
-              name="age"
-              value="<%= obj.age %>"
-                type="number"
-                class="form-control"
-                id="inputage4"
-              />
             </div>
           
-
-            <div class="col-md-4">
-              <label for="inputCountry" class="form-label">Country:</label>
-              <select name="country" id="inputCountry" class="form-select">
-                <option selected hidden disabled>Choose here ...</option>
-    
-                <option <%= obj.country === "Morocco"? "selected" : null %>>Morocco</option>
-                <option <%= obj.country === "Egypt"? "selected" : null %>>Egypt</option>
-                <option <%= obj.country === "Algeria" ? "selected" : null %>>Algeria</option>
-                <option <%= obj.country === "Bahrain" ? "selected" : null %>>Bahrain</option>
-                <option <%= obj.country === "Comoros" ? "selected" : null %>>Comoros</option>
-                <option <%= obj.country === "Djibouti" ? "selected" : null %>>Djibouti</option>
-                <option <%= obj.country === "Egypt" ? "selected" : null %>>Egypt</option>
-                <option <%= obj.country === "Iraq" ? "selected" : null %>>Iraq</option>
-                <option <%= obj.country === "Jordan" ? "selected" : null %>>Jordan</option>
-                <option <%= obj.country === "Kuwait" ? "selected" : null %>>Kuwait</option>
-                <option <%= obj.country === "Lebanon" ? "selected" : null %>>Lebanon</option>
-                <option <%= obj.country === "Libya" ? "selected" : null %>>Libya</option>
-                <option <%= obj.country === "Mauritania" ? "selected" : null %>>Mauritania</option>
-                <option <%= obj.country === "Morocco" ? "selected" : null %>>Morocco</option>
-                <option <%= obj.country === "Oman" ? "selected" : null %>>Oman</option>
-                <option <%= obj.country === "Palestine" ? "selected" : null %>>Palestine</option>
-                <option <%= obj.country === "Qatar" ? "selected" : null %>>Qatar</option>
-                <option <%= obj.country === "Saudi Arabia" ? "selected" : null %>>Saudi Arabia</option>
-                <option <%= obj.country === "Somalia" ? "selected" : null %>>Somalia</option>
-                <option <%= obj.country === "Sudan" ? "selected" : null %>>Sudan</option>
-                <option <%= obj.country === "Syria" ? "selected" : null %>>Syria</option>
-                <option <%= obj.country === "Tunisia" ? "selected" : null %>>Tunisia</option>
-                <option <%= obj.country === "United Arab Emirates" ? "selected" : null %>>United Arab Emirates</option>
-                <option <%= obj.country === "Yemen" ? "selected" : null %>>Yemen</option>
+            <!-- Step 2: Operation Information -->
+            <div class="wizard-step" id="step2">
+              <h3 class="step-title"><i class="bi bi-hospital"></i> Operation Information</h3>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="inputDepartment" class="form-label">Department <span class="text-danger">*</span></label>
+                  <select class="form-select" id="inputDepartment" name="Department" required>
+                    <option value="" disabled>Select Department</option>
+                    <option value="General Surgery" <%= (obj.Department === "General Surgery" || obj.department === "General Surgery") ? "selected" : "" %>>General Surgery</option>
+                    <option value="Orthopedics" <%= (obj.Department === "Orthopedics" || obj.department === "Orthopedics") ? "selected" : "" %>>Orthopedics</option>
+                    <option value="ENT" <%= (obj.Department === "ENT" || obj.department === "ENT") ? "selected" : "" %>>ENT (Ear, Nose & Throat)</option>
+                    <option value="Urology" <%= (obj.Department === "Urology" || obj.department === "Urology") ? "selected" : "" %>>Urology</option>
+                    <option value="Plastic Surgery" <%= (obj.Department === "Plastic Surgery" || obj.department === "Plastic Surgery") ? "selected" : "" %>>Plastic Surgery</option>
+                    <option value="Neurosurgery" <%= (obj.Department === "Neurosurgery" || obj.department === "Neurosurgery") ? "selected" : "" %>>Neurosurgery</option>
+                    <option value="OB/GYN" <%= (obj.Department === "OB/GYN" || obj.department === "OB/GYN") ? "selected" : "" %>>OB/GYN (Obstetrics & Gynecology)</option>
+                    <option value="Cardiothoracic Surgery" <%= (obj.Department === "Cardiothoracic Surgery" || obj.department === "Cardiothoracic Surgery") ? "selected" : "" %>>Cardiothoracic Surgery</option>
+                    <option value="Ophthalmology" <%= (obj.Department === "Ophthalmology" || obj.department === "Ophthalmology") ? "selected" : "" %>>Ophthalmology</option>
+                    <option value="Cardiology" <%= (obj.Department === "Cardiology" || obj.department === "Cardiology") ? "selected" : "" %>>Cardiology (Cardiac Catheterization)</option>
               </select>
             </div>
-          
-    
-          
-            <div class="col-md-4">
-              <label for="inputGender" class="form-label">Gender:</label>
-              <select name="gender" id="inputGender" class="form-select">
-                <option selected hidden disabled>Choose here ...</option>
-                <option <%= obj.gender === "Male"? "selected" : null %>>Male</option>
-                <option <%= obj.gender === "Female"? "selected" : null %>>Female</option>
-              </select>
+                <div class="col-md-6">
+                  <label for="inputTypeofOperation" class="form-label">Type of Operation</label>
+                  <input name="TypeofOperation" value="<%= obj.TypeofOperation %>" type="text" class="form-control" id="inputTypeofOperation" />
+                </div>
+                <div class="col-12">
+                  <label for="diagnosis" class="form-label">Diagnosis</label>
+                  <textarea class="form-control" id="diagnosis" name="diagnosis" rows="4" placeholder="Enter diagnosis details..."><%= obj.diagnosis %></textarea>
+                </div>
+                <div class="col-12">
+                  <label for="notes" class="form-label">Notes</label>
+                  <textarea class="form-control" id="notes" name="notes" rows="4" placeholder="Enter any additional notes..."><%= obj.notes %></textarea>
+                </div>
+              </div>
+              <div class="wizard-buttons">
+                <button type="button" class="btn btn-secondary btn-wizard" onclick="prevStep()"><i class="bi bi-arrow-left"></i> Previous</button>
+                <button type="button" class="btn btn-primary btn-wizard" onclick="nextStep()">Next <i class="bi bi-arrow-right"></i></button>
+              </div>
             </div>
           
-          
-          <div class="col-md-4">
-            <label for="inputBloodType" class="form-label">Blood Type:</label>
-            <select name="bloodType" id="inputBloodType" class="form-select">
-              <option selected hidden disabled>Choose here ...</option>
-              <option <%= obj.blood_type === "A+" ? "selected" : "" %>>A+</option>
-              <option <%= obj.blood_type === "A-" ? "selected" : "" %>>A-</option>
-              <option <%= obj.blood_type === "B+" ? "selected" : "" %>>B+</option>
-              <option <%= obj.blood_type === "B-" ? "selected" : "" %>>B-</option>
-              <option <%= obj.blood_type === "AB+" ? "selected" : "" %>>AB+</option>
-              <option <%= obj.blood_type === "AB-" ? "selected" : "" %>>AB-</option>
-              <option <%= obj.blood_type === "O+" ? "selected" : "" %>>O+</option>
-              <option <%= obj.blood_type === "O-" ? "selected" : "" %>>O-</option>
-            </select>
+            <!-- Step 3: Medical Staff -->
+            <div class="wizard-step" id="step3">
+              <h3 class="step-title"><i class="bi bi-people"></i> Medical Staff</h3>
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label for="inputsurgeon" class="form-label">Surgeon Name</label>
+                  <input name="surgeon" value="<%= obj.surgeon %>" type="text" class="form-control" id="inputsurgeon" />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputsurgeonAssistent1" class="form-label">Surgeon Assistant 1</label>
+                  <input name="surgeonAssistent1" value="<%= obj.surgeonAssistent1 %>" type="text" class="form-control" id="inputsurgeonAssistent1" />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputsurgeonAssistent2" class="form-label">Surgeon Assistant 2</label>
+                  <input name="surgeonAssistent2" value="<%= obj.surgeonAssistent2 %>" type="text" class="form-control" id="inputsurgeonAssistent2" />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputsurgeonAssistent3" class="form-label">Surgeon Assistant 3</label>
+                  <input name="surgeonAssistent3" value="<%= obj.surgeonAssistent3 %>" type="text" class="form-control" id="inputsurgeonAssistent3" />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputtypeOfAnasthesia" class="form-label">Type of Anesthesia</label>
+                  <input name="TypeOfAnasthesia" value="<%= obj.TypeOfAnasthesia %>" placeholder="Type Of Anesthesia" type="text" class="form-control" id="inputtypeOfAnasthesia" />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputAnasthesiologist1" class="form-label">Anesthesiologist 1</label>
+                  <input name="Anasthesiologist1" value="<%= obj.Anasthesiologist1 %>" placeholder="Anesthesiologist 1" type="text" class="form-control" id="inputAnasthesiologist1" />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputAnasthesiologist2" class="form-label">Anesthesiologist 2</label>
+                  <input name="Anasthesiologist2" value="<%= obj.Anasthesiologist2 %>" placeholder="Anesthesiologist 2" type="text" class="form-control" id="inputAnasthesiologist2" />
+                </div>
+                <div class="col-md-6">
+                  <label for="inputAnasthesiaTechnia" class="form-label">Anesthesia Technician</label>
+                  <input name="AnasthesiaTechnia" value="<%= obj.AnasthesiaTechnia %>" placeholder="Anesthesia Technician" type="text" class="form-control" id="inputAnasthesiaTechnia" />
           </div>
-    
-          <div class="md-3">
-            <label for="inputDepartment" class="form-label">Department:</label>
-            <select class="form-select" id="inputDepartment" name="Department" required>
-                <option selected hidden disabled>Select Department</option>
-                <option <%= obj.department === "General Surgery" ? "selected" : "" %>>General Surgery</option>
-                <option <%= obj.department === "Orthopedics" ? "selected" : "" %>>Orthopedics</option>
-                <option <%= obj.department === "ENT" ? "selected" : "" %>>ENT (Ear, Nose & Throat)</option>
-                <option  <%= obj.department === "Urology" ? "selected" : "" %>>Urology</option>
-                <option <%= obj.department === "Plastic Surgery" ? "selected" : "" %>>Plastic Surgery</option>
-                <option  <%= obj.department === "Neurosurgery" ? "selected" : "" %>>Neurosurgery</option>
-                <option  <%= obj.department === "OB/GYN" ? "selected" : "" %>>OB/GYN (Obstetrics & Gynecology)</option>
-                <option  <%= obj.department === "Cardiothoracic Surgery" ? "selected" : "" %>>Cardiothoracic Surgery</option>
-                <option  <%= obj.department === "Ophthalmology" ? "selected" : "" %>>Ophthalmology</option>
-                <option  <%= obj.department === "Cardiology" ? "selected" : "" %>>Cardiology (Cardiac Catheterization)</option>
-            </select>
+                <div class="col-md-6">
+                  <label for="inputScrub1" class="form-label">Scrub 1</label>
+                  <input name="Scrub1" value="<%= obj.Scrub1 %>" placeholder="Scrub 1" type="text" class="form-control" id="inputScrub1" />
         </div>
-        
-          <div class="mb-3">
-            <label for="notes" class="form-label">notes</label>
-            <input class="form-control" id="notes" name="notes" rows="3" placeholder=" notes" value="<%= obj.notes %>"/>
+                <div class="col-md-6">
+                  <label for="inputScrub2" class="form-label">Scrub 2</label>
+                  <input name="Scrub2" value="<%= obj.Scrub2 %>" placeholder="Scrub 2" type="text" class="form-control" id="inputScrub2" />
           </div>
-    
-          <div class="mb-3">
-            <label for="diagnosis" class="form-label">diagnosis</label>
-            <input class="form-control" id="diagnosis" name="diagnosis" rows="3" placeholder=" diagnosis" value="<%= obj.diagnosis %>"/>
           </div>
-          
-          
-    
-          <div class="col-12">
-            <button type="submit" class="btn btn-primary">
-              Update changes
-            </button>
+              <div class="wizard-buttons">
+                <button type="button" class="btn btn-secondary btn-wizard" onclick="prevStep()"><i class="bi bi-arrow-left"></i> Previous</button>
+                <div>
+                  <button type="submit" class="btn btn-success btn-wizard me-2"><i class="bi bi-check-circle"></i> Update Patient</button>
             <button
+                    type="button"
               data-bs-toggle="modal"
               data-bs-target="#exampleModal"
-              type="button"
-              class="btn btn-danger"
+                    class="btn btn-danger btn-wizard"
             >
-              Delete patient
+                    <i class="bi bi-trash"></i> Delete
             </button>
+                </div>
+              </div>
           </div>
         </form>
+        </div>
       </section>
     
       <!-- Modal -->
@@ -680,7 +750,8 @@
               Close
             </button>
             <form action="/delete/<%= obj._id %>?_method=DELETE" method="POST" class="mx-0">
-              <button type="submit" class="btn btn-danger ms-2"> <!-- Add 'ms-2' to add margin -->
+              <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+              <button type="submit" class="btn btn-danger ms-2">
                 Delete
               </button>
             </form>
@@ -694,3 +765,86 @@
     
     <script src="../js/sidebars.js"></script>
     <script src="../js/main.js"></script>
+    <script>
+      let currentStep = 1;
+      const totalSteps = 3;
+
+      function updateProgress() {
+        // Update progress bar
+        const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+        document.getElementById('progressBar').style.width = progress + '%';
+
+        // Update step indicators
+        document.querySelectorAll('.step-indicator').forEach((indicator, index) => {
+          const stepNum = index + 1;
+          indicator.classList.remove('active', 'completed');
+          if (stepNum < currentStep) {
+            indicator.classList.add('completed');
+            indicator.querySelector('.step-circle').innerHTML = '<i class="bi bi-check"></i>';
+          } else if (stepNum === currentStep) {
+            indicator.classList.add('active');
+            indicator.querySelector('.step-circle').innerHTML = stepNum;
+          } else {
+            indicator.querySelector('.step-circle').innerHTML = stepNum;
+          }
+        });
+      }
+
+      function showStep(step) {
+        // Hide all steps
+        document.querySelectorAll('.wizard-step').forEach(s => s.classList.remove('active'));
+        
+        // Show current step
+        document.getElementById('step' + step).classList.add('active');
+        
+        currentStep = step;
+        updateProgress();
+      }
+
+      function nextStep() {
+        // Validate current step
+        const currentStepElement = document.getElementById('step' + currentStep);
+        const requiredFields = currentStepElement.querySelectorAll('[required]');
+        let isValid = true;
+
+        requiredFields.forEach(field => {
+          if (!field.value.trim()) {
+            isValid = false;
+            field.classList.add('is-invalid');
+          } else {
+            field.classList.remove('is-invalid');
+          }
+        });
+
+        if (!isValid) {
+          alert('Please fill in all required fields before proceeding.');
+          return;
+        }
+
+        if (currentStep < totalSteps) {
+          showStep(currentStep + 1);
+        }
+      }
+
+      function prevStep() {
+        if (currentStep > 1) {
+          showStep(currentStep - 1);
+        }
+      }
+
+      // Initialize
+      updateProgress();
+
+      // Allow clicking on step indicators to navigate (optional)
+      document.querySelectorAll('.step-indicator').forEach((indicator, index) => {
+        indicator.addEventListener('click', () => {
+          const targetStep = index + 1;
+          if (targetStep <= currentStep) {
+            showStep(targetStep);
+          }
+        });
+        indicator.style.cursor = 'pointer';
+      });
+    </script>
+  </body>
+</html>

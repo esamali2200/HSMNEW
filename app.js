@@ -1,6 +1,7 @@
+require('dotenv').config();
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 const mongoose = require('mongoose');
 const path = require("path");
 const livereload = require("livereload");
@@ -9,10 +10,15 @@ const moment = require('moment');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const MongoDBStore = require('connect-mongodb-session')(session);
+const helmet = require('helmet');
+const rateLimit = require('express-rate-limit');
+const csrf = require('csurf');
+const authRoutes = require('./routes/auth.routes');
+const patientsRoutes = require('./routes/patients.routes');
 
 // تعريف مخزن الجلسات
 const store = new MongoDBStore({
-  uri: "mongodb+srv://esesalal2200:E2s0a0m2@cluster0.m2naw.mongodb.net/all-data?retryWrites=true&w=majority&appName=Cluster0",
+  uri: process.env.MONGODB_URI,
   collection: 'sessions'
 });
 
@@ -34,10 +40,29 @@ app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(express.urlencoded({ extended: true }));
+app.use(helmet({
+  crossOriginEmbedderPolicy: false
+}));
+
+// Content Security Policy مخصصة في التطوير للسماح بالسكريبتات الداخلية و live-reload
+if (process.env.NODE_ENV !== 'production') {
+  app.use(helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "'unsafe-inline'", 'http://localhost:35729'],
+      scriptSrcAttr: ["'unsafe-inline'"],
+      connectSrc: ["'self'", 'ws://localhost:35729', 'http://localhost:35729'],
+      styleSrc: ["'self'", "'unsafe-inline'"],
+      imgSrc: ["'self'", 'data:'],
+      objectSrc: ["'none'"]
+    }
+  }));
+}
 
 // تعديل إعدادات الجلسة
 app.use(session({
-  secret: 'ZCM_SECRET_KEY_2024', // مفتاح سري جديد
+  secret: process.env.SESSION_SECRET || 'change_me_in_env',
   resave: false,
   saveUninitialized: false,
   store: store,
@@ -48,6 +73,25 @@ app.use(session({
     sameSite: 'strict' // حماية من CSRF
   }
 }));
+
+// CSRF protection
+const csrfProtection = csrf();
+app.use(csrfProtection);
+
+// Inject csrf token to all templates
+app.use((req, res, next) => {
+  res.locals.csrfToken = req.csrfToken();
+  next();
+});
+// Rate limit لمسار تسجيل الدخول للحد من محاولات التخمين
+const loginLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  max: 20,
+  standardHeaders: true,
+  legacyHeaders: false,
+  message: 'Too many login attempts, please try again later.'
+});
+
 
 // إضافة middleware لحماية إضافية
 app.use((req, res, next) => {
@@ -100,7 +144,7 @@ liveReloadServer.server.once("connection", () => {
 });
 
 // اتصال قاعدة البيانات
-mongoose.connect("mongodb+srv://esesalal2200:E2s0a0m2@cluster0.m2naw.mongodb.net/all-data?retryWrites=true&w=majority&appName=Cluster0")
+mongoose.connect(process.env.MONGODB_URI)
   .then(() => {
     app.listen(port, () => {
       console.log(`Server running at http://localhost:${port}`);
@@ -123,63 +167,11 @@ app.get('/check-auth', (req, res) => {
 });
 
 // Routes
-app.get('/', (req, res) => {
-  if (req.session.isLoggedIn) {
-    return res.redirect('/H');
-  }
-  res.render("user/login", { error: undefined });
-});
+app.use('/', authRoutes);
 
-// تحسين مسار تسجيل الدخول
-app.post('/', (req, res) => {
-  const { username, password } = req.body;
-  
-  // تأخير بسيط لمنع محاولات تخمين كلمة المرور
-  setTimeout(() => {
-    if (username === 'admin1234' && password === 'admin1234') {
-      req.session.isLoggedIn = true;
-      req.session.user = { 
-        username,
-        loginTime: new Date(),
-        lastActive: new Date()
-      };
-      
-      req.session.save(err => {
-        if (err) {
-          console.log(err);
-          return res.render('user/login', { error: 'حدث خطأ في تسجيل الدخول' });
-        }
-        res.redirect('/H');
-      });
-    } else {
-      res.render('user/login', { error: 'بيانات الدخول غير صحيحة' });
-    }
-  }, 1000);
-});
-
-app.post('/logout', (req, res) => {
-  req.session.destroy(err => {
-    if (err) {
-      console.log(err);
-      return res.status(500).json({ error: 'Error logging out' });
-    }
-    res.clearCookie('connect.sid');
-    res.set('Cache-Control', 'no-store');
-    res.redirect('/');
-  });
-});
-
-// المسارات المحمية
-app.get('/H', isAuth, (req, res) => {
-  customer.find()
-    .then((result) => {
-      res.render("index", { arr: result, moment: moment });
-    })
-    .catch((err) => {
-      console.log(err);
-      res.redirect('/');
-    });
-});
+// المسارات
+app.use('/', authRoutes);
+app.use('/', patientsRoutes);
 
 app.get("/user/add.html", isAuth, (req, res) => {
   res.render("user/add");
